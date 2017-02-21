@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="textWhite_0" format="reference" />
+    <attr name="textWhite_1" format="reference" />
+    <attr name="textWhite_2" format="reference" />
+    <attr name="textWhite_3" format="reference" />
+
+    <attr name="textPrimary_0" format="reference" />
+    <attr name="textPrimary_1" format="reference" />
+    <attr name="textPrimary_2" format="reference" />
+    <attr name="textPrimary_3" format="reference" />
+
+    <attr name="textSecondary_0" format="reference" />
+    <attr name="textSecondary_1" format="reference" />
+    <attr name="textSecondary_2" format="reference" />
+    <attr name="textSecondary_3" format="reference" />
+
+    <attr name="textWarning_0" format="reference" />
+    <attr name="textWarning_1" format="reference" />
+    <attr name="textWarning_2" format="reference" />
+    <attr name="textWarning_3" format="reference" />
+
+    <attr name="textAccent_0" format="reference" />
+    <attr name="textAccent_1" format="reference" />
+    <attr name="textAccent_2" format="reference" />
+    <attr name="textAccent_3" format="reference" />
+
+    <attr name="editText" format="reference" />
+    <attr name="editTextBordered" format="reference" />
+    <attr name="button" format="reference" />
+    <attr name="buttonImage" format="reference" />
+    <attr name="buttonEditText" format="reference" />
+    <attr name="buttonRaised" format="reference" />
+    <attr name="buttonFlat" format="reference" />
+</resources>

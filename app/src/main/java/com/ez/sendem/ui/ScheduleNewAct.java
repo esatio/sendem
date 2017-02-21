@@ -1,0 +1,125 @@
+package com.ez.sendem.ui;
+
+import android.app.Activity;
+import android.content.ContentResolver;
+import android.content.CursorLoader;
+import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
+import android.os.Bundle;
+import android.provider.Contacts;
+import android.provider.ContactsContract;
+import android.support.design.widget.FloatingActionButton;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.Toast;
+
+import com.ez.sendem.R;
+import com.ez.sendem.adapter.SpinnerAdapter;
+import com.ez.sendem.manager.FontManager;
+import com.ez.sendem.object.ContactData;
+import com.ez.sendem.ui.component.FontButton;
+
+import java.util.ArrayList;
+
+public class ScheduleNewAct extends RootToolbar implements View.OnClickListener, AdapterView.OnItemSelectedListener{
+    private FontButton fb_addrecipient;
+    private Spinner spn_repeat, spn_ends;
+    private String[] repeatType, endsType;
+
+    private static final int PICK_CONTACT = 1;
+
+    private EditText etTo;
+    private String str_selectedContact = "";
+    private ArrayList<ContactData> selectedContact = new ArrayList<>();
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.schedulenewact);
+
+        setTitle(R.string.schedulenew_title);
+
+        etTo = (EditText)findViewById(R.id.etTo);
+
+        fb_addrecipient = (FontButton)findViewById(R.id.fb_addrecipient);
+        fb_addrecipient.setOnClickListener(this);
+
+        repeatType = getResources().getStringArray(R.array.repeat_type);
+        spn_repeat = (Spinner)findViewById(R.id.spn_repeat);
+        SpinnerAdapter adtRepeatQuestion = new SpinnerAdapter(this,repeatType);
+        spn_repeat.setAdapter(adtRepeatQuestion);
+        spn_repeat.setOnItemSelectedListener(this);
+
+        endsType = getResources().getStringArray(R.array.ends_type);
+        spn_ends = (Spinner)findViewById(R.id.spn_ends);
+        SpinnerAdapter adtEndsQuestion = new SpinnerAdapter(this,endsType);
+        spn_ends.setAdapter(adtEndsQuestion);
+        spn_ends.setOnItemSelectedListener(this);
+    }
+
+    @Override
+    public void onClick(View view) {
+        if(view.equals(fb_addrecipient)){
+            selectContact();
+        }
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+
+    }
+
+    private void refreshRecipientEditText(){
+        etTo.setText(str_selectedContact);
+    }
+
+    private void selectContact(){
+        Uri uri = Uri.parse("content://contacts");
+        Intent intent = new Intent(Intent.ACTION_PICK, uri);
+        intent.setType(ContactsContract.CommonDataKinds.Phone.CONTENT_TYPE);
+        startActivityForResult(intent, PICK_CONTACT);
+    }
+
+    public void onActivityResult(int reqCode, int resultCode, Intent data) {
+        super.onActivityResult(reqCode, resultCode, data);
+
+        switch (reqCode) {
+            case (PICK_CONTACT) :
+                if (resultCode == Activity.RESULT_OK) {
+                    Uri contactUri = data.getData();
+                    ContentResolver cr = getContentResolver();
+                    Cursor c = cr.query(contactUri, null, null, null, null);
+
+                    if (c.moveToFirst()) {
+                        String id =
+                                c.getString(c.getColumnIndexOrThrow(ContactsContract.Contacts._ID));
+
+                        String displayName = c.getString(c.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
+                        String phoneNumber = c.getString(c.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+
+                        Uri photoUri = Uri.withAppendedPath(contactUri, ContactsContract.Contacts.Photo.CONTENT_DIRECTORY);
+
+                        ContactData contactData = new ContactData();
+                        contactData.id = id;
+                        contactData.displayName = displayName;
+                        contactData.phoneNumber = phoneNumber;
+                        contactData.photoUri = photoUri;
+                        str_selectedContact += displayName +"("+phoneNumber+")";
+                        refreshRecipientEditText();
+                        selectedContact.add(new ContactData());
+                    }
+                    c.close();
+                }
+                break;
+        }
+
+    }
+}

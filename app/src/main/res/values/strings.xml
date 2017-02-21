@@ -1,0 +1,36 @@
+<resources>
+    <string name="app_name">Send\'em</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="drw_sheduled">SCHEDULED</string>
+    <string name="drw_inactive">INACTIVE</string>
+    <string name="drw_history">HISTORY</string>
+    <string name="drw_exit">EXIT</string>
+
+    <string name="schedulenew_title">Add New Schedule</string>
+    <string name="to_label">TO : </string>
+    <string name="msg_label">MESSAGE : </string>
+    <string name="sch_label">SCHEDULE : </string>
+    <string name="repeat_label">REPEAT : </string>
+    <string name="ends_label">ENDS : </string>
+    <string name="btn_schedule">SCHEDULE IT!</string>
+
+    <string name="dialog_addnewtitle">Add Schedule For</string>
+
+    <string name="apptype_sms">Message</string>
+
+    <string-array name="repeat_type">
+        <item>Daily</item>
+        <item>Weekly</item>
+        <item>Monthly</item>
+        <item>Yearly</item>
+    </string-array>
+
+    <string-array name="ends_type">
+        <item>Never</item>
+        <item>After...</item>
+        <item>On...</item>
+    </string-array>
+</resources>

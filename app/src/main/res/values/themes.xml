@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="themeDefault" parent="AppTheme">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="themeDefaultSmall" parent="themeDefault">
+        <item name="textWhite_0">@style/text_white_small_0</item>
+        <item name="textWhite_1">@style/text_white_small_1</item>
+        <item name="textWhite_2">@style/text_white_small_2</item>
+        <item name="textWhite_3">@style/text_white_small_3</item>
+
+        <item name="textPrimary_0">@style/text_primary_small_0</item>
+        <item name="textPrimary_1">@style/text_primary_small_1</item>
+        <item name="textPrimary_2">@style/text_primary_small_2</item>
+        <item name="textPrimary_3">@style/text_primary_small_3</item>
+
+        <item name="textSecondary_0">@style/text_secondary_small_0</item>
+        <item name="textSecondary_1">@style/text_secondary_small_1</item>
+        <item name="textSecondary_2">@style/text_secondary_small_2</item>
+        <item name="textSecondary_3">@style/text_secondary_small_3</item>
+
+        <item name="textWarning_0">@style/text_warning_small_0</item>
+        <item name="textWarning_1">@style/text_warning_small_1</item>
+        <item name="textWarning_2">@style/text_warning_small_2</item>
+        <item name="textWarning_3">@style/text_warning_small_3</item>
+
+        <item name="textAccent_0">@style/text_accent_small_0</item>
+        <item name="textAccent_1">@style/text_accent_small_1</item>
+        <item name="textAccent_2">@style/text_accent_small_2</item>
+        <item name="textAccent_3">@style/text_accent_small_3</item>
+
+        <item name="editText">@style/edit_text_small</item>
+        <item name="editTextBordered">@style/edit_text_bordered_small</item>
+        <item name="button">@style/button_small</item>
+        <item name="buttonImage">@style/buttonImage_small</item>
+        <item name="buttonEditText">@style/buttonEditText_small</item>
+        <item name="buttonRaised">@style/buttonRaised_small</item>
+        <item name="buttonFlat">@style/buttonFlat_small</item>
+    </style>
+
+    <style name="themeDefaultMedium" parent="themeDefault">
+        <item name="textWhite_0">@style/text_white_medium_0</item>
+        <item name="textWhite_1">@style/text_white_medium_1</item>
+        <item name="textWhite_2">@style/text_white_medium_2</item>
+        <item name="textWhite_3">@style/text_white_medium_3</item>
+
+        <item name="textPrimary_0">@style/text_primary_medium_0</item>
+        <item name="textPrimary_1">@style/text_primary_medium_1</item>
+        <item name="textPrimary_2">@style/text_primary_medium_2</item>
+        <item name="textPrimary_3">@style/text_primary_medium_3</item>
+
+        <item name="textSecondary_0">@style/text_secondary_medium_0</item>
+        <item name="textSecondary_1">@style/text_secondary_medium_1</item>
+        <item name="textSecondary_2">@style/text_secondary_medium_2</item>
+        <item name="textSecondary_3">@style/text_secondary_medium_3</item>
+
+        <item name="textWarning_0">@style/text_warning_medium_0</item>
+        <item name="textWarning_1">@style/text_warning_medium_1</item>
+        <item name="textWarning_2">@style/text_warning_medium_2</item>
+        <item name="textWarning_3">@style/text_warning_medium_3</item>
+
+        <item name="textAccent_0">@style/text_accent_medium_0</item>
+        <item name="textAccent_1">@style/text_accent_medium_1</item>
+        <item name="textAccent_2">@style/text_accent_medium_2</item>
+        <item name="textAccent_3">@style/text_accent_medium_3</item>
+
+        <item name="editText">@style/edit_text_medium</item>
+        <item name="editTextBordered">@style/edit_text_bordered_medium</item>
+        <item name="button">@style/button_medium</item>
+        <item name="buttonImage">@style/buttonImage_medium</item>
+        <item name="buttonEditText">@style/buttonEditText_medium</item>
+        <item name="buttonRaised">@style/buttonRaised_medium</item>
+        <item name="buttonFlat">@style/buttonFlat_medium</item>
+    </style>
+
+    <style name="themeDefaultLarge" parent="themeDefault">
+        <item name="textWhite_0">@style/text_white_large_0</item>
+        <item name="textWhite_1">@style/text_white_large_1</item>
+        <item name="textWhite_2">@style/text_white_large_2</item>
+        <item name="textWhite_3">@style/text_white_large_3</item>
+
+        <item name="textPrimary_0">@style/text_primary_large_0</item>
+        <item name="textPrimary_1">@style/text_primary_large_1</item>
+        <item name="textPrimary_2">@style/text_primary_large_2</item>
+        <item name="textPrimary_3">@style/text_primary_large_3</item>
+
+        <item name="textSecondary_0">@style/text_secondary_large_0</item>
+        <item name="textSecondary_1">@style/text_secondary_large_1</item>
+        <item name="textSecondary_2">@style/text_secondary_large_2</item>
+        <item name="textSecondary_3">@style/text_secondary_large_3</item>
+
+        <item name="textWarning_0">@style/text_warning_large_0</item>
+        <item name="textWarning_1">@style/text_warning_large_1</item>
+        <item name="textWarning_2">@style/text_warning_large_2</item>
+        <item name="textWarning_3">@style/text_warning_large_3</item>
+
+        <item name="textAccent_0">@style/text_accent_large_0</item>
+        <item name="textAccent_1">@style/text_accent_large_1</item>
+        <item name="textAccent_2">@style/text_accent_large_2</item>
+        <item name="textAccent_3">@style/text_accent_large_3</item>
+
+        <item name="editText">@style/edit_text_large</item>
+        <item name="editTextBordered">@style/edit_text_bordered_large</item>
+        <item name="button">@style/button_large</item>
+        <item name="buttonImage">@style/buttonImage_large</item>
+        <item name="buttonEditText">@style/buttonEditText_large</item>
+        <item name="buttonRaised">@style/buttonRaised_large</item>
+        <item name="buttonFlat">@style/buttonFlat_large</item>
+    </style>
+</resources>

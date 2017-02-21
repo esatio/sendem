@@ -1,0 +1,430 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <!--<style name="DialogTransition" parent="@android:style/Animation.Activity">-->
+        <!--<item name="android:windowEnterAnimation">@anim/slide_in_bottom</item>-->
+        <!--<item name="android:windowExitAnimation">@anim/slide_out_bottom</item>-->
+    <!--</style>-->
+
+    <!-- TEXT WHITE -->
+    <style name="text_white">
+        <item name="android:textColor">@color/colorWhite</item>
+    </style>
+
+    <style name="text_white_small_0" parent="text_white">
+        <item name="android:textSize">@dimen/fontSizeSmall0</item>
+    </style>
+
+    <style name="text_white_small_1" parent="text_white">
+        <item name="android:textSize">@dimen/fontSizeSmall1</item>
+    </style>
+
+    <style name="text_white_small_2" parent="text_white">
+        <item name="android:textSize">@dimen/fontSizeSmall2</item>
+    </style>
+
+    <style name="text_white_small_3" parent="text_white">
+        <item name="android:textSize">@dimen/fontSizeSmall3</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="text_white_medium_0" parent="text_white">
+        <item name="android:textSize">@dimen/fontSizeMedium0</item>
+    </style>
+
+    <style name="text_white_medium_1" parent="text_white">
+        <item name="android:textSize">@dimen/fontSizeMedium1</item>
+    </style>
+
+    <style name="text_white_medium_2" parent="text_white">
+        <item name="android:textSize">@dimen/fontSizeMedium2</item>
+    </style>
+
+    <style name="text_white_medium_3" parent="text_white">
+        <item name="android:textSize">@dimen/fontSizeMedium3</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="text_white_large_0" parent="text_white">
+        <item name="android:textSize">@dimen/fontSizeLarge0</item>
+    </style>
+
+    <style name="text_white_large_1" parent="text_white">
+        <item name="android:textSize">@dimen/fontSizeLarge1</item>
+    </style>
+
+    <style name="text_white_large_2" parent="text_white">
+        <item name="android:textSize">@dimen/fontSizeLarge2</item>
+    </style>
+
+    <style name="text_white_large_3" parent="text_white">
+        <item name="android:textSize">@dimen/fontSizeLarge3</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <!-- TEXT PRIMARY -->
+    <style name="text_primary">
+        <item name="android:textColor">@color/colorTextPrimary</item>
+    </style>
+
+    <style name="text_primary_small_0" parent="text_primary">
+        <item name="android:textSize">@dimen/fontSizeSmall0</item>
+    </style>
+
+    <style name="text_primary_small_1" parent="text_primary">
+        <item name="android:textSize">@dimen/fontSizeSmall1</item>
+    </style>
+
+    <style name="text_primary_small_2" parent="text_primary">
+        <item name="android:textSize">@dimen/fontSizeSmall2</item>
+    </style>
+
+    <style name="text_primary_small_3" parent="text_primary">
+        <item name="android:textSize">@dimen/fontSizeSmall3</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="text_primary_medium_0" parent="text_primary">
+        <item name="android:textSize">@dimen/fontSizeMedium0</item>
+    </style>
+
+    <style name="text_primary_medium_1" parent="text_primary">
+        <item name="android:textSize">@dimen/fontSizeMedium1</item>
+    </style>
+
+    <style name="text_primary_medium_2" parent="text_primary">
+        <item name="android:textSize">@dimen/fontSizeMedium2</item>
+    </style>
+
+    <style name="text_primary_medium_3" parent="text_primary">
+        <item name="android:textSize">@dimen/fontSizeMedium3</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="text_primary_large_0" parent="text_primary">
+        <item name="android:textSize">@dimen/fontSizeLarge0</item>
+    </style>
+
+    <style name="text_primary_large_1" parent="text_primary">
+        <item name="android:textSize">@dimen/fontSizeLarge1</item>
+    </style>
+
+    <style name="text_primary_large_2" parent="text_primary">
+        <item name="android:textSize">@dimen/fontSizeLarge2</item>
+    </style>
+
+    <style name="text_primary_large_3" parent="text_primary">
+        <item name="android:textSize">@dimen/fontSizeLarge3</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <!-- TEXT SECONDARY -->
+
+    <style name="text_secondary">
+        <item name="android:textColor">@color/colorTextSecondary</item>
+    </style>
+
+    <style name="text_secondary_small_0" parent="text_secondary">
+        <item name="android:textSize">@dimen/fontSizeSmall0</item>
+    </style>
+
+    <style name="text_secondary_small_1" parent="text_secondary">
+        <item name="android:textSize">@dimen/fontSizeSmall1</item>
+    </style>
+
+    <style name="text_secondary_small_2" parent="text_secondary">
+        <item name="android:textSize">@dimen/fontSizeSmall2</item>
+    </style>
+
+    <style name="text_secondary_small_3" parent="text_secondary">
+        <item name="android:textSize">@dimen/fontSizeSmall3</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="text_secondary_medium_0" parent="text_secondary">
+        <item name="android:textSize">@dimen/fontSizeMedium0</item>
+    </style>
+
+    <style name="text_secondary_medium_1" parent="text_secondary">
+        <item name="android:textSize">@dimen/fontSizeMedium1</item>
+    </style>
+
+    <style name="text_secondary_medium_2" parent="text_secondary">
+        <item name="android:textSize">@dimen/fontSizeMedium2</item>
+    </style>
+
+    <style name="text_secondary_medium_3" parent="text_secondary">
+        <item name="android:textSize">@dimen/fontSizeMedium3</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="text_secondary_large_0" parent="text_secondary">
+        <item name="android:textSize">@dimen/fontSizeLarge0</item>
+    </style>
+
+    <style name="text_secondary_large_1" parent="text_secondary">
+        <item name="android:textSize">@dimen/fontSizeLarge1</item>
+    </style>
+
+    <style name="text_secondary_large_2" parent="text_secondary">
+        <item name="android:textSize">@dimen/fontSizeLarge2</item>
+    </style>
+
+    <style name="text_secondary_large_3" parent="text_secondary">
+        <item name="android:textSize">@dimen/fontSizeLarge3</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+
+    <!-- TEXT WARNING -->
+    <style name="text_warning">
+        <item name="android:textColor">@color/colorWarning</item>
+    </style>
+
+    <style name="text_warning_small_0" parent="text_warning">
+        <item name="android:textSize">@dimen/fontSizeSmall0</item>
+    </style>
+
+    <style name="text_warning_small_1" parent="text_warning">
+        <item name="android:textSize">@dimen/fontSizeSmall1</item>
+    </style>
+
+    <style name="text_warning_small_2" parent="text_warning">
+        <item name="android:textSize">@dimen/fontSizeSmall2</item>
+    </style>
+
+    <style name="text_warning_small_3" parent="text_warning">
+        <item name="android:textSize">@dimen/fontSizeSmall3</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="text_warning_medium_0" parent="text_warning">
+        <item name="android:textSize">@dimen/fontSizeMedium0</item>
+    </style>
+
+    <style name="text_warning_medium_1" parent="text_warning">
+        <item name="android:textSize">@dimen/fontSizeMedium1</item>
+    </style>
+
+    <style name="text_warning_medium_2" parent="text_warning">
+        <item name="android:textSize">@dimen/fontSizeMedium2</item>
+    </style>
+
+    <style name="text_warning_medium_3" parent="text_warning">
+        <item name="android:textSize">@dimen/fontSizeMedium3</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="text_warning_large_0" parent="text_warning">
+        <item name="android:textSize">@dimen/fontSizeLarge0</item>
+    </style>
+
+    <style name="text_warning_large_1" parent="text_warning">
+        <item name="android:textSize">@dimen/fontSizeLarge1</item>
+    </style>
+
+    <style name="text_warning_large_2" parent="text_warning">
+        <item name="android:textSize">@dimen/fontSizeLarge2</item>
+    </style>
+
+    <style name="text_warning_large_3" parent="text_warning">
+        <item name="android:textSize">@dimen/fontSizeLarge3</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+
+    <!-- TEXT ACCENT -->
+    <style name="text_accent">
+        <item name="android:textColor">@color/colorAccent</item>
+    </style>
+
+    <style name="text_accent_small_0" parent="text_accent">
+        <item name="android:textSize">@dimen/fontSizeSmall0</item>
+    </style>
+
+    <style name="text_accent_small_1" parent="text_accent">
+        <item name="android:textSize">@dimen/fontSizeSmall1</item>
+    </style>
+
+    <style name="text_accent_small_2" parent="text_accent">
+        <item name="android:textSize">@dimen/fontSizeSmall2</item>
+    </style>
+
+    <style name="text_accent_small_3" parent="text_accent">
+        <item name="android:textSize">@dimen/fontSizeSmall3</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="text_accent_medium_0" parent="text_accent">
+        <item name="android:textSize">@dimen/fontSizeMedium0</item>
+    </style>
+
+    <style name="text_accent_medium_1" parent="text_accent">
+        <item name="android:textSize">@dimen/fontSizeMedium1</item>
+    </style>
+
+    <style name="text_accent_medium_2" parent="text_accent">
+        <item name="android:textSize">@dimen/fontSizeMedium2</item>
+    </style>
+
+    <style name="text_accent_medium_3" parent="text_accent">
+        <item name="android:textSize">@dimen/fontSizeMedium3</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="text_accent_large_0" parent="text_accent">
+        <item name="android:textSize">@dimen/fontSizeLarge0</item>
+    </style>
+
+    <style name="text_accent_large_1" parent="text_accent">
+        <item name="android:textSize">@dimen/fontSizeLarge1</item>
+    </style>
+
+    <style name="text_accent_large_2" parent="text_accent">
+        <item name="android:textSize">@dimen/fontSizeLarge2</item>
+    </style>
+
+    <style name="text_accent_large_3" parent="text_accent">
+        <item name="android:textSize">@dimen/fontSizeLarge3</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+
+    <!-- EDIT TEXT -->
+    <style name="edit_text">
+        <item name="android:textColor">@color/colorTextPrimary</item>
+        <item name="android:textColorHint">@color/colorTextSecondary</item>
+    </style>
+
+    <style name="edit_text_small" parent="edit_text">
+        <item name="android:textSize">@dimen/fontSizeSmall2</item>
+    </style>
+
+    <style name="edit_text_medium" parent="edit_text">
+        <item name="android:textSize">@dimen/fontSizeMedium2</item>
+    </style>
+
+    <style name="edit_text_large" parent="edit_text">
+        <item name="android:textSize">@dimen/fontSizeLarge2</item>
+    </style>
+
+    <!-- EDIT TEXT BORDERED-->
+    <style name="edit_text_bordered">
+        <item name="android:textColor">@color/colorTextPrimary</item>
+        <item name="android:textColorHint">@color/colorTextSecondary</item>
+        <item name="android:background">@drawable/et_selector</item>
+    </style>
+
+    <style name="edit_text_bordered_small" parent="edit_text_bordered">
+        <item name="android:textSize">@dimen/fontSizeSmall2</item>
+    </style>
+
+    <style name="edit_text_bordered_medium" parent="edit_text_bordered">
+        <item name="android:textSize">@dimen/fontSizeMedium2</item>
+    </style>
+
+    <style name="edit_text_bordered_large" parent="edit_text_bordered">
+        <item name="android:textSize">@dimen/fontSizeLarge2</item>
+    </style>
+
+    <!-- BUTTON -->
+    <style name="button">
+        <item name="android:textColor">@color/colorWhite</item>
+        <item name="android:background">@drawable/btn_selector</item>
+    </style>
+
+    <style name="button_small" parent="button">
+        <item name="android:textSize">@dimen/fontSizeSmall2</item>
+    </style>
+
+    <style name="button_medium" parent="button">
+        <item name="android:textSize">@dimen/fontSizeMedium2</item>
+    </style>
+
+    <style name="button_large" parent="button">
+        <item name="android:textSize">@dimen/fontSizeLarge2</item>
+    </style>
+
+    <!-- BUTTON IMAGE -->
+    <style name="buttonImage">
+        <item name="android:textColor">@color/colorWhite</item>
+        <item name="android:background">@drawable/btn_image_selector</item>
+    </style>
+
+    <style name="buttonImage_small" parent="buttonImage">
+        <item name="android:textSize">@dimen/fontSizeSmall2</item>
+    </style>
+
+    <style name="buttonImage_medium" parent="buttonImage">
+        <item name="android:textSize">@dimen/fontSizeMedium2</item>
+    </style>
+
+    <style name="buttonImage_large" parent="buttonImage">
+        <item name="android:textSize">@dimen/fontSizeLarge2</item>
+    </style>
+
+    <!-- BUTTON RAISED-->
+    <style name="buttonRaised">
+        <item name="android:textColor">@color/colorWhite</item>
+        <item name="android:background">@drawable/btn_raised_selector</item>
+    </style>
+
+    <style name="buttonRaised_small" parent="buttonRaised">
+        <item name="android:textSize">@dimen/fontSizeSmall2</item>
+    </style>
+
+    <style name="buttonRaised_medium" parent="buttonRaised">
+        <item name="android:textSize">@dimen/fontSizeMedium2</item>
+    </style>
+
+    <style name="buttonRaised_large" parent="buttonRaised">
+        <item name="android:textSize">@dimen/fontSizeLarge2</item>
+    </style>
+
+    <!-- BUTTON FLAT-->
+    <style name="buttonFlat">
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:background">@drawable/btn_flat_selector</item>
+    </style>
+
+    <style name="buttonFlat_small" parent="buttonFlat">
+        <item name="android:textSize">@dimen/fontSizeSmall2</item>
+    </style>
+
+    <style name="buttonFlat_medium" parent="buttonFlat">
+        <item name="android:textSize">@dimen/fontSizeMedium2</item>
+    </style>
+
+    <style name="buttonFlat_large" parent="buttonFlat">
+        <item name="android:textSize">@dimen/fontSizeLarge2</item>
+    </style>
+
+    <!-- BUTTON EDITTEXT-->
+    <style name="buttonEditText">
+        <item name="android:textColor">@color/colorTextPrimary</item>
+        <item name="android:background">@drawable/btn_edittext_selector</item>
+    </style>
+
+    <style name="buttonEditText_small" parent="buttonEditText">
+        <item name="android:textSize">@dimen/fontSizeSmall1</item>
+    </style>
+
+    <style name="buttonEditText_medium" parent="buttonEditText">
+        <item name="android:textSize">@dimen/fontSizeMedium1</item>
+    </style>
+
+    <style name="buttonEditText_large" parent="buttonEditText">
+        <item name="android:textSize">@dimen/fontSizeLarge1</item>
+    </style>
+
+</resources>
