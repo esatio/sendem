@@ -51,7 +51,8 @@ public class LoadingAct extends RootAct {
             }
         }
     }
-
+// yang mana yang diedit??
+    
     private void openMainApp(){
         TimerTask task = new TimerTask() {
             @Override
