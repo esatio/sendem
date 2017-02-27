@@ -32,4 +32,15 @@ public class RealmHelper {
     public static void deleteAll(){
         RealmBaseHelper.deleteAll(getRealm());
     }
+
+    public static int getPrimaryKey(Class realmObjectClass, String primaryKey){
+        Number currentIdNum = RealmHelper.getRealm().where(realmObjectClass).max(primaryKey);
+        int nextId;
+        if(currentIdNum == null) {
+            nextId = 1;
+        } else {
+            nextId = currentIdNum.intValue() + 1;
+        }
+        return nextId;
+    }
 }
