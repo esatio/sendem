@@ -151,6 +151,7 @@ public class ScheduleNewAct extends RootToolbar implements View.OnClickListener,
             recipient.setInfo("");
             recipient.setPhoneNumber(selectedContact.get(i).phoneNumber);
             recipientList.add(recipient);
+//            GeneralFunction.sendSMS(this, selectedContact.get(i).phoneNumber, "test");
         }
 
         Table_Scheduled schedule = new Table_Scheduled();

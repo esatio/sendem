@@ -15,6 +15,7 @@ import java.util.TimerTask;
 public class LoadingAct extends RootAct {
 
     private static final int PERMISSIONS_REQUEST_READ_CONTACTS = 1;
+    private static final int PERMISSIONS_REQUEST_SEND_SMS= 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,13 +26,24 @@ public class LoadingAct extends RootAct {
     @Override
     public void onResume(){
         super.onResume();
-        checkPermission();
+        checkPermission_readContact();
     }
 
-    private void checkPermission() {
+    private void checkPermission_readContact() {
         // Check the SDK version and whether the permission is already granted or not.
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && checkSelfPermission(Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
             requestPermissions(new String[]{Manifest.permission.READ_CONTACTS}, PERMISSIONS_REQUEST_READ_CONTACTS);
+            //After this point you wait for callback in onRequestPermissionsResult(int, String[], int[]) overriden method
+        } else {
+            // Android version is lesser than 6.0 or the permission is already granted.
+            checkPermission_sendSMS();
+        }
+    }
+
+    private void checkPermission_sendSMS() {
+        // Check the SDK version and whether the permission is already granted or not.
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && checkSelfPermission(Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(new String[]{Manifest.permission.SEND_SMS}, PERMISSIONS_REQUEST_SEND_SMS);
             //After this point you wait for callback in onRequestPermissionsResult(int, String[], int[]) overriden method
         } else {
             // Android version is lesser than 6.0 or the permission is already granted.
@@ -45,13 +57,19 @@ public class LoadingAct extends RootAct {
         if (requestCode == PERMISSIONS_REQUEST_READ_CONTACTS) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 // Permission is granted
+                checkPermission_sendSMS();
+            } else {
+                Toast.makeText(this, "Until you grant the permission, we cannot display the names", Toast.LENGTH_SHORT).show();
+            }
+        } else if (requestCode == PERMISSIONS_REQUEST_SEND_SMS) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // Permission is granted
                 openMainApp();
             } else {
                 Toast.makeText(this, "Until you grant the permission, we cannot display the names", Toast.LENGTH_SHORT).show();
             }
         }
     }
-// yang mana yang diedit??
 
     private void openMainApp(){
         TimerTask task = new TimerTask() {
