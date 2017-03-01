@@ -12,17 +12,27 @@ import android.provider.ContactsContract;
 import android.support.design.widget.FloatingActionButton;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.ez.sendem.R;
 import com.ez.sendem.adapter.SpinnerAdapter;
+import com.ez.sendem.db.DBConstraint;
+import com.ez.sendem.db.RealmHelper;
+import com.ez.sendem.db.tables.Table_Recipient;
+import com.ez.sendem.db.tables.Table_Scheduled;
+import com.ez.sendem.function.GeneralFunction;
 import com.ez.sendem.manager.FontManager;
 import com.ez.sendem.object.ContactData;
 import com.ez.sendem.ui.component.FontButton;
 
 import java.util.ArrayList;
+
+import io.realm.RealmList;
 
 public class ScheduleNewAct extends RootToolbar implements View.OnClickListener, AdapterView.OnItemSelectedListener{
     private FontButton fb_addrecipient;
@@ -31,7 +41,10 @@ public class ScheduleNewAct extends RootToolbar implements View.OnClickListener,
 
     private static final int PICK_CONTACT = 1;
 
-    private EditText etTo;
+    private EditText etTo, et_msg;
+    private Button btn_schedule;
+    private DatePicker datePicker;
+    private TimePicker timePicker;
     private String str_selectedContact = "";
     private ArrayList<ContactData> selectedContact = new ArrayList<>();
 
@@ -43,6 +56,7 @@ public class ScheduleNewAct extends RootToolbar implements View.OnClickListener,
         setTitle(R.string.schedulenew_title);
 
         etTo = (EditText)findViewById(R.id.etTo);
+        et_msg = (EditText)findViewById(R.id.et_msg);
 
         fb_addrecipient = (FontButton)findViewById(R.id.fb_addrecipient);
         fb_addrecipient.setOnClickListener(this);
@@ -58,12 +72,20 @@ public class ScheduleNewAct extends RootToolbar implements View.OnClickListener,
         SpinnerAdapter adtEndsQuestion = new SpinnerAdapter(this,endsType);
         spn_ends.setAdapter(adtEndsQuestion);
         spn_ends.setOnItemSelectedListener(this);
+
+        btn_schedule = (Button)findViewById(R.id.btn_schedule);
+        btn_schedule.setOnClickListener(this);
+
+        datePicker = (DatePicker)findViewById(R.id.datePicker);
+        timePicker = (TimePicker)findViewById(R.id.timePicker);
     }
 
     @Override
     public void onClick(View view) {
         if(view.equals(fb_addrecipient)){
             selectContact();
+        } else if(view.equals(btn_schedule)){
+            saveSchedule();
         }
     }
 
@@ -114,12 +136,33 @@ public class ScheduleNewAct extends RootToolbar implements View.OnClickListener,
                         contactData.photoUri = photoUri;
                         str_selectedContact += displayName +"("+phoneNumber+")";
                         refreshRecipientEditText();
-                        selectedContact.add(new ContactData());
+                        selectedContact.add(contactData);
                     }
                     c.close();
                 }
                 break;
         }
+    }
 
+    private void saveSchedule(){
+        RealmList<Table_Recipient> recipientList = new RealmList<>();
+        for(int i = 0; i<selectedContact.size(); i++){
+            Table_Recipient recipient = new Table_Recipient();
+            recipient.setInfo("");
+            recipient.setPhoneNumber(selectedContact.get(i).phoneNumber);
+            recipientList.add(recipient);
+//            GeneralFunction.sendSMS(this, selectedContact.get(i).phoneNumber, "test");
+        }
+
+        Table_Scheduled schedule = new Table_Scheduled();
+        schedule.setSch_id(RealmHelper.getPrimaryKey(Table_Scheduled.class, Table_Scheduled.PRIMARY_KEY));
+        schedule.setRecipients(recipientList);
+        schedule.setSch_msg(et_msg.getText().toString());
+        schedule.setSch_recipient_type(DBConstraint.SCHEDULE_RECIPIENT_TYPE.SMS);
+        schedule.setSch_date(GeneralFunction.getDateTimeFromPicker(datePicker, timePicker));
+        schedule.setSch_ends_on(0);
+        schedule.setSch_repeat_type(0);
+        RealmHelper.insertDB(schedule);
+        finish();
     }
 }

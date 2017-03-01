@@ -15,10 +15,13 @@ import android.widget.Toast;
 
 import com.ez.sendem.R;
 import com.ez.sendem.adapter.ScheduledAdapter;
+import com.ez.sendem.db.RealmHelper;
+import com.ez.sendem.db.tables.Table_Scheduled;
 import com.ez.sendem.dialog.DlgAddNew;
 import com.ez.sendem.manager.FontManager;
 import com.ez.sendem.manager.PageManager;
 
+import io.realm.RealmResults;
 import io.realm.Sort;
 
 public class ScheduledFragment extends RootFrag implements View.OnClickListener, AdapterView.OnItemClickListener{
@@ -55,11 +58,23 @@ public class ScheduledFragment extends RootFrag implements View.OnClickListener,
         fab_new.setOnClickListener(this);
 
         listView = (ListView)view.findViewById(R.id.listView);
-        adapter = new ScheduledAdapter(getContext());
-        listView.setAdapter(adapter);
         listView.setOnItemClickListener(this);
 
         return view;
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        RealmResults<Table_Scheduled> schedule= RealmHelper.getRealm().where(Table_Scheduled.class).findAll();
+        adapter = new ScheduledAdapter(getContext(), schedule);
+        listView.setAdapter(adapter);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        RealmHelper.getRealm().close();
     }
 
     @Override
