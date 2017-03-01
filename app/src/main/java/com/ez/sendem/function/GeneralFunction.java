@@ -67,14 +67,17 @@ public class GeneralFunction {
         String result = "";
         if(hour<10){
             result = "0"+hour;
+//            result.concat(String.valueOf(hour));
         } else {
-            result = ""+result;
+            result = ""+hour;
+//            String hour_Str = String.valueOf(hour);
+//            result.concat(0+""+String.valueOf(hour));
         }
 
         if(minute<10){
-            result += "0"+result;
+            result = result+":0"+String.valueOf(minute);
         } else {
-            result += result;
+            result = result+":"+String.valueOf(minute);
         }
 
         return result;
@@ -104,6 +107,5 @@ public class GeneralFunction {
         }
 
     }
-
 
 }

@@ -25,12 +25,14 @@ import com.ez.sendem.db.DBConstraint;
 import com.ez.sendem.db.RealmHelper;
 import com.ez.sendem.db.tables.Table_Recipient;
 import com.ez.sendem.db.tables.Table_Scheduled;
+import com.ez.sendem.function.AlarmFunction;
 import com.ez.sendem.function.GeneralFunction;
 import com.ez.sendem.manager.FontManager;
 import com.ez.sendem.object.ContactData;
 import com.ez.sendem.ui.component.FontButton;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import io.realm.RealmList;
 
@@ -154,15 +156,24 @@ public class ScheduleNewAct extends RootToolbar implements View.OnClickListener,
 //            GeneralFunction.sendSMS(this, selectedContact.get(i).phoneNumber, "test");
         }
 
+        Date selectedDate = GeneralFunction.getDateTimeFromPicker(datePicker, timePicker);
+
         Table_Scheduled schedule = new Table_Scheduled();
         schedule.setSch_id(RealmHelper.getPrimaryKey(Table_Scheduled.class, Table_Scheduled.PRIMARY_KEY));
         schedule.setRecipients(recipientList);
         schedule.setSch_msg(et_msg.getText().toString());
         schedule.setSch_recipient_type(DBConstraint.SCHEDULE_RECIPIENT_TYPE.SMS);
-        schedule.setSch_date(GeneralFunction.getDateTimeFromPicker(datePicker, timePicker));
+        schedule.setSch_date(selectedDate);
         schedule.setSch_ends_on(0);
         schedule.setSch_repeat_type(0);
         RealmHelper.insertDB(schedule);
+
+        /*
+        setAlarm
+         */
+
+        AlarmFunction.setAlarm(this, selectedDate.getTime());
+
         finish();
     }
 }
