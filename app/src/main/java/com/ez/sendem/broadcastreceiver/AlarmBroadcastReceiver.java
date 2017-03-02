@@ -4,7 +4,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.PowerManager;
-import android.widget.Toast;
+
+import com.ez.sendem.function.GeneralFunction;
 
 public class AlarmBroadcastReceiver extends BroadcastReceiver
 {
@@ -15,8 +16,8 @@ public class AlarmBroadcastReceiver extends BroadcastReceiver
         PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "");
         wl.acquire();
 
-        // Put here YOUR code.
-        Toast.makeText(context, "Alarm !!!!!!!!!!", Toast.LENGTH_LONG).show(); // For example
+        //comment: ambil schedule yang sudah tiba waktunya
+        GeneralFunction.sendMessage(context);
 
         wl.release();
     }

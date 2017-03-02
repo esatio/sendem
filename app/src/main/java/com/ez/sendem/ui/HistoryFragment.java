@@ -10,7 +10,8 @@ import android.widget.ListView;
 
 import com.ez.sendem.R;
 import com.ez.sendem.adapter.ScheduledAdapter;
-import com.ez.sendem.db.RealmHelper;
+import com.ez.sendem.db.DBConstraint;
+import com.ez.sendem.db.RealmMainHelper;
 import com.ez.sendem.db.tables.Table_Scheduled;
 import com.ez.sendem.manager.FontManager;
 import com.ez.sendem.manager.PageManager;
@@ -59,7 +60,10 @@ public class HistoryFragment extends RootFrag implements View.OnClickListener, A
     @Override
     public void onResume(){
         super.onResume();
-        RealmResults<Table_Scheduled> schedule= RealmHelper.getRealm().where(Table_Scheduled.class).findAll();
+        RealmResults<Table_Scheduled> schedule= RealmMainHelper.getRealm()
+                                                .where(Table_Scheduled.class)
+                                                .equalTo(Table_Scheduled.STATUS, DBConstraint.SCHEDULE_STATUS.EXPIRED)
+                                                .findAll();
         adapter = new ScheduledAdapter(getContext(), schedule);
         listView.setAdapter(adapter);
     }
@@ -67,7 +71,7 @@ public class HistoryFragment extends RootFrag implements View.OnClickListener, A
     @Override
     public void onDestroy() {
         super.onDestroy();
-        RealmHelper.getRealm().close();
+        RealmMainHelper.getRealm().close();
     }
 
     @Override

@@ -2,14 +2,11 @@ package com.ez.sendem.ui;
 
 import android.app.Activity;
 import android.content.ContentResolver;
-import android.content.CursorLoader;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.Contacts;
 import android.provider.ContactsContract;
-import android.support.design.widget.FloatingActionButton;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -17,17 +14,14 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TimePicker;
-import android.widget.Toast;
 
 import com.ez.sendem.R;
 import com.ez.sendem.adapter.SpinnerAdapter;
 import com.ez.sendem.db.DBConstraint;
-import com.ez.sendem.db.RealmHelper;
+import com.ez.sendem.db.RealmMainHelper;
 import com.ez.sendem.db.tables.Table_Recipient;
 import com.ez.sendem.db.tables.Table_Scheduled;
-import com.ez.sendem.function.AlarmFunction;
 import com.ez.sendem.function.GeneralFunction;
-import com.ez.sendem.manager.FontManager;
 import com.ez.sendem.object.ContactData;
 import com.ez.sendem.ui.component.FontButton;
 
@@ -159,20 +153,18 @@ public class ScheduleNewAct extends RootToolbar implements View.OnClickListener,
         Date selectedDate = GeneralFunction.getDateTimeFromPicker(datePicker, timePicker);
 
         Table_Scheduled schedule = new Table_Scheduled();
-        schedule.setSch_id(RealmHelper.getPrimaryKey(Table_Scheduled.class, Table_Scheduled.PRIMARY_KEY));
+        schedule.setSch_id(RealmMainHelper.getPrimaryKey(Table_Scheduled.class, Table_Scheduled.PRIMARY_KEY));
         schedule.setRecipients(recipientList);
         schedule.setSch_msg(et_msg.getText().toString());
         schedule.setSch_recipient_type(DBConstraint.SCHEDULE_RECIPIENT_TYPE.SMS);
-        schedule.setSch_date(selectedDate);
+        schedule.setSch_date(selectedDate.getTime());
         schedule.setSch_ends_on(0);
         schedule.setSch_repeat_type(0);
-        RealmHelper.insertDB(schedule);
+        schedule.setSch_status(DBConstraint.SCHEDULE_STATUS.ACTIVE);
+        RealmMainHelper.insertDB(schedule);
 
-        /*
-        setAlarm
-         */
-
-        AlarmFunction.setAlarm(this, selectedDate.getTime());
+//        AlarmFunction.setAlarm(this, selectedDate.getTime());
+//        AlarmFunction.setAlarm(this, selectedDate.getTime()+TimeUnit.MINUTES.toMillis(2));
 
         finish();
     }

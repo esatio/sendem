@@ -13,13 +13,18 @@ public class Table_Scheduled extends RealmObject {
     private int sch_id;
     private String sch_msg;
     private int sch_recipient_type;
-    private Date sch_date;
+    private long sch_date;
     private int sch_repeat_type;
     private int sch_ends_on;
     private RealmList<Table_Recipient> recipients;
+    private int sch_status; //comment: untuk menentukan apakah masih aktif atau ga
 
     @Ignore
     public static String PRIMARY_KEY = "sch_id";
+    @Ignore
+    public static String DATE = "sch_date";
+    @Ignore
+    public static String STATUS = "sch_status";
 
     public int getSch_id() {
         return sch_id;
@@ -52,11 +57,11 @@ public class Table_Scheduled extends RealmObject {
     private int sch_ends_on;
      */
 
-    public Date getSch_date(){
+    public long getSch_date(){
         return sch_date;
     }
 
-    public void setSch_date(Date sch_date){
+    public void setSch_date(long sch_date){
         this.sch_date = sch_date;
     }
 
@@ -82,6 +87,14 @@ public class Table_Scheduled extends RealmObject {
 
     public void setRecipients(RealmList<Table_Recipient> recipients) {
         this.recipients = recipients;
+    }
+
+    public int getSch_status(){
+        return this.sch_status;
+    }
+
+    public void setSch_status(int sch_status){
+        this.sch_status = sch_status;
     }
 
 }

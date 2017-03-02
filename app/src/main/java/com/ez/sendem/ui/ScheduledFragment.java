@@ -1,28 +1,22 @@
 package com.ez.sendem.ui;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.ProgressBar;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.ez.sendem.R;
 import com.ez.sendem.adapter.ScheduledAdapter;
-import com.ez.sendem.db.RealmHelper;
+import com.ez.sendem.db.DBConstraint;
+import com.ez.sendem.db.RealmMainHelper;
 import com.ez.sendem.db.tables.Table_Scheduled;
 import com.ez.sendem.dialog.DlgAddNew;
 import com.ez.sendem.manager.FontManager;
-import com.ez.sendem.manager.PageManager;
 
 import io.realm.RealmResults;
-import io.realm.Sort;
 
 public class ScheduledFragment extends RootFrag implements View.OnClickListener, AdapterView.OnItemClickListener{
     private static ScheduledFragment fragment;
@@ -66,7 +60,10 @@ public class ScheduledFragment extends RootFrag implements View.OnClickListener,
     @Override
     public void onResume(){
         super.onResume();
-        RealmResults<Table_Scheduled> schedule= RealmHelper.getRealm().where(Table_Scheduled.class).findAll();
+        RealmResults<Table_Scheduled> schedule= RealmMainHelper.getRealm()
+                                            .where(Table_Scheduled.class)
+                                            .equalTo(Table_Scheduled.STATUS, DBConstraint.SCHEDULE_STATUS.ACTIVE)
+                                            .findAll();
         adapter = new ScheduledAdapter(getContext(), schedule);
         listView.setAdapter(adapter);
     }
@@ -74,7 +71,7 @@ public class ScheduledFragment extends RootFrag implements View.OnClickListener,
     @Override
     public void onDestroy() {
         super.onDestroy();
-        RealmHelper.getRealm().close();
+        RealmMainHelper.getRealm().close();
     }
 
     @Override

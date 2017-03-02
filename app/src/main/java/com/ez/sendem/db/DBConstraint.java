@@ -7,4 +7,10 @@ public class DBConstraint {
         public static int WA = 1;
         public static int LINE = 2;
     }
+
+    public static class SCHEDULE_STATUS {
+        public static int ACTIVE = 0;
+        public static int INACTIVE = 1;
+        public static int EXPIRED = 2;
+    }
 }

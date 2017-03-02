@@ -1,22 +1,19 @@
 package com.ez.sendem.function;
 
-import android.Manifest;
-import android.app.PendingIntent;
 import android.content.Context;
-import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.os.Build;
-import android.telephony.SmsManager;
 import android.widget.DatePicker;
 import android.widget.TimePicker;
-import android.widget.Toast;
 
-import com.ez.sendem.broadcastreceiver.SMSDeliveredReceiver;
-import com.ez.sendem.broadcastreceiver.SmsSentReceiver;
+import com.ez.sendem.db.DBConstraint;
+import com.ez.sendem.db.RealmBackgroundHelper;
+import com.ez.sendem.db.RealmMainHelper;
+import com.ez.sendem.db.tables.Table_Scheduled;
+import com.ez.sendem.object.ContactData;
+import com.ez.sendem.services.MyService;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -67,45 +64,77 @@ public class GeneralFunction {
         String result = "";
         if(hour<10){
             result = "0"+hour;
-//            result.concat(String.valueOf(hour));
         } else {
             result = ""+hour;
-//            String hour_Str = String.valueOf(hour);
-//            result.concat(0+""+String.valueOf(hour));
         }
 
         if(minute<10){
-            result = result+":0"+String.valueOf(minute);
+            result = result+":0"+minute;
         } else {
-            result = result+":"+String.valueOf(minute);
+            result = result+":"+minute;
         }
 
         return result;
     }
 
-    public static void sendSMS(Context mContext, String phoneNumber, String message) {
-        ArrayList<PendingIntent> sentPendingIntents = new ArrayList<PendingIntent>();
-        ArrayList<PendingIntent> deliveredPendingIntents = new ArrayList<PendingIntent>();
-        PendingIntent sentPI = PendingIntent.getBroadcast(mContext, 0,
-                new Intent(mContext, SmsSentReceiver.class), 0);
-        PendingIntent deliveredPI = PendingIntent.getBroadcast(mContext, 0,
-                new Intent(mContext, SMSDeliveredReceiver.class), 0);
-        try {
-            SmsManager sms = SmsManager.getDefault();
-            ArrayList<String> mSMSMessage = sms.divideMessage(message);
-            for (int i = 0; i < mSMSMessage.size(); i++) {
-                sentPendingIntents.add(i, sentPI);
-                deliveredPendingIntents.add(i, deliveredPI);
-            }
-            sms.sendMultipartTextMessage(phoneNumber, null, mSMSMessage,
-                    sentPendingIntents, deliveredPendingIntents);
-            sms.sendTextMessage(phoneNumber, null, message, sentPI, deliveredPI);
-            Toast.makeText(mContext, "SMS sent",Toast.LENGTH_SHORT).show();
-        } catch (Exception e) {
-            e.printStackTrace();
-            Toast.makeText(mContext, "SMS sending failed...",Toast.LENGTH_SHORT).show();
-        }
-
+    public static int getDeviceApiLevel(){
+        return Build.VERSION.SDK_INT;
     }
 
+    public static void sendMessage(Context context){
+//        Table_Scheduled[] updateTable = new Table_Scheduled[MyService.nextSchedule.size()];
+        int[] arrId = new int[MyService.nextSchedule.size()];
+        if(MyService.nextSchedule != null && MyService.nextSchedule.size() > 0){
+            for(int a=0; a<MyService.nextSchedule.size(); a++){
+                Table_Scheduled schedule = MyService.nextSchedule.get(a);
+                if(schedule!=null){
+                    arrId[a] = schedule.getSch_id();
+//                    Table_Scheduled newSchedule = new Table_Scheduled();
+//                    newSchedule.setSch_id(schedule.getSch_id());
+//                    newSchedule.setSch_msg(schedule.getSch_msg());
+//                    newSchedule.setSch_recipient_type(schedule.getSch_recipient_type());
+//                    newSchedule.setSch_date(schedule.getSch_date());
+//                    newSchedule.setSch_repeat_type(schedule.getSch_repeat_type());
+//                    newSchedule.setSch_ends_on(schedule.getSch_ends_on());
+//                    newSchedule.setRecipients(schedule.getRecipients());
+//                    newSchedule.setSch_status(DBConstraint.SCHEDULE_STATUS.EXPIRED);
+
+//                    updateTable[a] = newSchedule;
+                    String recipient = "";
+                    if(schedule.getSch_recipient_type() == DBConstraint.SCHEDULE_RECIPIENT_TYPE.SMS){
+                        String text = schedule.getSch_msg();
+                        for(int b=0; b<schedule.getRecipients().size(); b++){
+                            String phoneNumber = schedule.getRecipients().get(b).phoneNumber();
+                            SMSFunction.sendSMS(context, phoneNumber, text);
+                            ContactData contactData = ContactFunction.getPhoneContactInfo(context, phoneNumber);
+                            if(contactData==null){
+                                recipient += phoneNumber+"; ";
+                            } else {
+                                recipient += phoneNumber+"("+contactData.displayName+"); ";
+                            }
+                        }
+                    }
+                    NotifFunction.generateAndroidNotif(context, "Scheduler has been sent message to "+recipient);
+                }
+            }
+        }
+
+        //comment: update table
+        Table_Scheduled[] updateTable = new Table_Scheduled[MyService.nextSchedule.size()];
+        for(int a=0; a<arrId.length; a++){
+            Table_Scheduled schedule = RealmMainHelper.getRealm().where(Table_Scheduled.class).equalTo(Table_Scheduled.PRIMARY_KEY, arrId[a]).findFirst();
+
+            Table_Scheduled newSchedule = new Table_Scheduled();
+            newSchedule.setSch_id(schedule.getSch_id());
+            newSchedule.setSch_msg(schedule.getSch_msg());
+            newSchedule.setSch_recipient_type(schedule.getSch_recipient_type());
+            newSchedule.setSch_date(schedule.getSch_date());
+            newSchedule.setSch_repeat_type(schedule.getSch_repeat_type());
+            newSchedule.setSch_ends_on(schedule.getSch_ends_on());
+            newSchedule.setRecipients(schedule.getRecipients());
+            newSchedule.setSch_status(DBConstraint.SCHEDULE_STATUS.EXPIRED);
+            updateTable[a] = newSchedule;
+        }
+        RealmBackgroundHelper.insertDB(updateTable);
+    }
 }

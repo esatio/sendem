@@ -7,7 +7,8 @@
     <uses-permission android:name="android.permission.READ_CONTACTS"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.SEND_SMS"/>
-    <uses-permission android:name="android.permission.WAKE_LOCK"></uses-permission>
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.VIBRATE"/>
 
     <application
         android:name=".ui.MainApp"
@@ -27,6 +28,14 @@
         <activity android:name=".ui.ScheduleNewAct"
             android:windowSoftInputMode="adjustResize"
             android:screenOrientation="portrait"></activity>
+
+        <service android:name=".services.MyService" />
+
+        <receiver android:name=".broadcastreceiver.RebootBroadcastReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
 
         <receiver android:name=".broadcastreceiver.SmsSentReceiver" >
             <intent-filter>

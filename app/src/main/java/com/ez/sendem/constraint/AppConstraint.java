@@ -1,5 +1,7 @@
 package com.ez.sendem.constraint;
 
+import android.content.Intent;
+
 public class AppConstraint {
 
     public static class THEME_TYPE {
@@ -16,4 +18,6 @@ public class AppConstraint {
     }
 
     public static String LANG_DEFAULT = LANG_TYPE.LANG_IN;
+
+    public static Intent ServiceIntent;
 }

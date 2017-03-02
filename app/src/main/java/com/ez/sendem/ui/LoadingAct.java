@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 import com.ez.sendem.R;
+import com.ez.sendem.function.ServiceFunction;
 import com.ez.sendem.manager.PageManager;
 
 import java.util.Timer;
@@ -75,6 +76,7 @@ public class LoadingAct extends RootAct {
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
+                ServiceFunction.StartMyService(LoadingAct.this);
                 PageManager.open_FirstPage(LoadingAct.this);
             }
         };
