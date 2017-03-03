@@ -1,5 +1,9 @@
 package com.ez.sendem.db;
 
+/*
+note untuk class ini:
+-. class ini berisi semua constraint yang digunakan di database
+ */
 public class DBConstraint {
 
     public static class SCHEDULE_RECIPIENT_TYPE {

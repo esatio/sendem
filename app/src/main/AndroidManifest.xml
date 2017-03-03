@@ -4,19 +4,47 @@
     android:versionCode="1"
     android:versionName="1.0.0">
 
+    <!--
+     /*
+    //comment : manifest - 1
+        1. list semua permission yang dibutuhkan oleh aplikasi
+        2. list ini akan muncul ketika kita menginstall aplikasi
+     */
+     -->
     <uses-permission android:name="android.permission.READ_CONTACTS"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.SEND_SMS"/>
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
     <uses-permission android:name="android.permission.VIBRATE"/>
 
+    <!--
+     /*
+    //comment : manifest - 2
+        1. tulis class yang extends Application di "android:name" pada tag <application>.
+        2. Pada aplikasi ini, class tersebut ada di "com.ez.sendem.ui.MainApp"
+        3. Karena di line-3, nama package "com.ez.sendem", maka nama yang dicantumin hanya "ui.MainApp"
+        4. "android:icon" beguna untuk set logo aplikasi
+     */
+     -->
     <application
         android:name=".ui.MainApp"
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
+        <!--
+         /*
+        //comment : manifest - 3
+            1. tag <activity> berguna untuk nge-list semua activity yang ada di aplikasi
+         */
+         -->
         <activity android:name=".ui.LoadingAct">
+            <!--
+             /*
+            //comment : manifest - 4
+                1. tag <intent-filter> dibawah ini untuk menentukan activity mana yang dijalankan duluan
+             */
+             -->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -29,8 +57,21 @@
             android:windowSoftInputMode="adjustResize"
             android:screenOrientation="portrait"></activity>
 
+
+        <!--
+         /*
+        //comment : manifest - 5
+            1. tag <service> berguna untuk nge-list background service yang kita gunakan di aplikasi
+         */
+         -->
         <service android:name=".services.MyService" />
 
+        <!--
+         /*
+        //comment : manifest - 6
+            1. tag <receiver> berguna untuk nge-list semua broadcast receiver yang ada di aplikasi
+         */
+         -->
         <receiver android:name=".broadcastreceiver.RebootBroadcastReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />

@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.os.IBinder;
 import android.os.SystemClock;
 
-import com.ez.sendem.db.RealmBackgroundHelper;
 import com.ez.sendem.db.tables.Table_Scheduled;
 import com.ez.sendem.function.AlarmFunction;
 import com.ez.sendem.function.ScheduleFunction;

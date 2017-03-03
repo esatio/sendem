@@ -1,14 +1,20 @@
 package com.ez.sendem.db.tables;
 
-import java.util.Date;
-
 import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
 
+/*
+//comment : db - 1
+    -. table realm harus ditandai dengan extends RealmObject
+*/
 public class Table_Scheduled extends RealmObject {
-
+    /*
+    //comment : db - 2
+        -. list kolom di table
+        -. untuk primary key, tambahkan "@PrimaryKey"
+    */
     @PrimaryKey
     private int sch_id;
     private String sch_msg;
@@ -16,9 +22,14 @@ public class Table_Scheduled extends RealmObject {
     private long sch_date;
     private int sch_repeat_type;
     private int sch_ends_on;
-    private RealmList<Table_Recipient> recipients;
+    private RealmList<Table_Recipient> recipients; //comment: list di table, harus menggunakan RealmList (tidak boleh menggunakan List android)
     private int sch_status; //comment: untuk menentukan apakah masih aktif atau ga
 
+    /*
+    //comment : db - 3
+        -. untuk variable atau function yang tidak berhubungan sama table (sebagai pendukung saja), harus ditambahkan "@Ignore"
+        -. jika tidak ditambahkan "@Ignore", akan error
+    */
     @Ignore
     public static String PRIMARY_KEY = "sch_id";
     @Ignore
@@ -26,6 +37,10 @@ public class Table_Scheduled extends RealmObject {
     @Ignore
     public static String STATUS = "sch_status";
 
+    /*
+    //comment : db - 4
+        -. buat function set dan get untuk semua kolom
+    */
     public int getSch_id() {
         return sch_id;
     }

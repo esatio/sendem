@@ -10,14 +10,17 @@ import android.widget.TextView;
 import com.ez.sendem.R;
 import com.ez.sendem.ui.component.FontTextView;
 
+/*
+note untuk class ini:
+-. class ini adalah base class untuk halaman-halaman yang non-menu drawer dan halaman-halaman yang ada toolbarnya diatas
+ */
 public class RootToolbar extends RootAct implements RootFrag.OnFragmentInteractionListener{
 
     protected Toolbar toolbar;
     protected FontTextView fontTextViewRight;
     private TextView tvTitle;
     private FrameLayout content;
-    //test ubah
-    // test lagi
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

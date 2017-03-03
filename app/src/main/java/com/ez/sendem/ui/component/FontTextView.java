@@ -5,6 +5,10 @@ import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.widget.TextView;
 
+/*
+note untuk class ini:
+-. class ini merupakan component TextView yang menggunakan awesomefont
+ */
 public class FontTextView extends TextView {
 
     public FontTextView(Context context) {
