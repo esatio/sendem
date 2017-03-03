@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.ez.sendem.R;
 import com.ez.sendem.adapter.ScheduledAdapter;
@@ -31,6 +32,7 @@ public class ScheduledFragment extends RootFrag implements View.OnClickListener,
 
     private View view;
     private ListView listView;
+    private TextView tvEmpty;
     private ScheduledAdapter adapter;
     private FloatingActionButton fab_new;
 
@@ -51,7 +53,11 @@ public class ScheduledFragment extends RootFrag implements View.OnClickListener,
         fab_new.setImageDrawable(drable);
         fab_new.setOnClickListener(this);
 
+        tvEmpty = (TextView)view.findViewById(R.id.tvEmpty);
+        tvEmpty.setText(R.string.empty_sch_active);
+
         listView = (ListView)view.findViewById(R.id.listView);
+        listView.setEmptyView(tvEmpty);
         listView.setOnItemClickListener(this);
 
         return view;

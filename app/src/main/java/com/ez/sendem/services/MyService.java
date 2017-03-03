@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.IBinder;
 import android.os.SystemClock;
 
+import com.ez.sendem.db.RealmMainHelper;
 import com.ez.sendem.db.tables.Table_Scheduled;
 import com.ez.sendem.function.AlarmFunction;
 import com.ez.sendem.function.ScheduleFunction;
@@ -34,7 +35,7 @@ public class MyService extends Service{
         refreshAlarm();
 
         listener = getListener();
-        RealmBackgroundHelper.getRealm().addChangeListener(listener);
+        RealmMainHelper.getRealm().addChangeListener(listener);
     }
 
     private RealmChangeListener getListener(){

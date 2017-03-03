@@ -21,6 +21,10 @@
 
     <string name="apptype_sms">Message</string>
 
+    <string name="empty_sch_active">active schedule is empty</string>
+    <string name="empty_sch_inactive">inactive schedule is empty</string>
+    <string name="empty_sch_history">history is empty</string>
+
     <string-array name="repeat_type">
         <item>Daily</item>
         <item>Weekly</item>
