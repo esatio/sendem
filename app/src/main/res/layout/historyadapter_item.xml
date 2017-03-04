@@ -3,13 +3,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ImageView
+    <com.ez.sendem.ui.component.InitialImageGroup
         android:id="@+id/iv"
         android:layout_width="64dp"
         android:layout_height="64dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_margin="16dp"/>
+        android:layout_margin="16dp" >
+    </com.ez.sendem.ui.component.InitialImageGroup>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -39,7 +40,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Once, 2/18/17, 1:00 PM"
-            android:layout_margin="8dp"
             style="?textSecondary_1"/>
 
     </LinearLayout>
@@ -50,6 +50,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
+        android:layout_margin="8dp"
         style="?textAccent_1"/>
 
 </RelativeLayout>

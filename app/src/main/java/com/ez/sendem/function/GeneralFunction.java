@@ -83,6 +83,16 @@ public class GeneralFunction {
                                 recipient += phoneNumber+"("+contactData.displayName+"); ";
                             }
                             smsObject[a] = new SMSObject(phoneNumber, text);
+
+                            //comment: insert ke table history
+                            Table_History history = new Table_History();
+                            history.setHst_id(RealmMainHelper.getPrimaryKey(Table_History.class, Table_History.PRIMARY_KEY));
+                            history.setRef_sch(schedule);
+                            history.setHst_msg(schedule.getSch_msg());
+                            history.setHst_send_date(schedule.getSch_next_active());
+                            history.setHst_send_status(DBConstraint.SCHEDULE_SEND_STATUS.SENDING);
+                            history.setPhoneNumber(schedule.getRecipients().get(b).phoneNumber());
+                            RealmMainHelper.insertDB(history);
                         }
                     }
                     NotifFunction.generateAndroidNotif(context, "Sending message to "+recipient);
@@ -94,15 +104,6 @@ public class GeneralFunction {
         Table_Scheduled[] schedules = new Table_Scheduled[arrId.length];
         for(int a=0; a<arrId.length; a++) {
             schedules[a] = RealmMainHelper.getRealm().where(Table_Scheduled.class).equalTo(Table_Scheduled.PRIMARY_KEY, arrId[a]).findFirst();
-
-            //comment: insert ke table history
-            Table_History history = new Table_History();
-            history.setHst_id(RealmMainHelper.getPrimaryKey(Table_History.class, Table_History.PRIMARY_KEY));
-            history.setRef_sch(schedules[a]);
-            history.setHst_msg(schedules[a].getSch_msg());
-            history.setHst_send_date(schedules[a].getSch_next_active());
-            history.setHst_send_status(DBConstraint.SCHEDULE_SEND_STATUS.SENDING);
-            RealmMainHelper.insertDB(history);
         }
 
         try{

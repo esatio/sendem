@@ -21,6 +21,7 @@ public class Table_History extends RealmObject {
     private String hst_msg;
     private long hst_send_date;
     private int hst_send_status; //comment: untuk menentukan apakah sedang mengirim, terkirim, atau gagal
+    private String phoneNumber;
 
     /*
     //comment : db - 3
@@ -75,6 +76,14 @@ public class Table_History extends RealmObject {
 
     public void setHst_send_status(int hst_send_status) {
         this.hst_send_status = hst_send_status;
+    }
+
+    public String phoneNumber(){
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber){
+        this.phoneNumber = phoneNumber;
     }
 
 }

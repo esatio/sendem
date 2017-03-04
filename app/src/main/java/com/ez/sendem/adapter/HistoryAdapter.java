@@ -21,6 +21,7 @@ import com.ez.sendem.function.ContactFunction;
 import com.ez.sendem.function.GeneralFunction;
 import com.ez.sendem.object.ContactData;
 import com.ez.sendem.ui.component.FontTextView;
+import com.ez.sendem.ui.component.InitialImageGroup;
 
 import java.util.Date;
 
@@ -42,7 +43,7 @@ public class HistoryAdapter extends RealmBaseAdapter<Table_History> implements L
     }
 
     class ViewHolder{
-        ImageView iv;
+        InitialImageGroup iv;
         TextView tvRecipient, tvMsg, tvInfo;
         FontTextView ftv_send_status;
     }
@@ -56,7 +57,7 @@ public class HistoryAdapter extends RealmBaseAdapter<Table_History> implements L
             view = inflater.inflate(R.layout.historyadapter_item, null);
 
             viewHolder = new ViewHolder();
-            viewHolder.iv = (ImageView)view.findViewById(R.id.iv);
+            viewHolder.iv = (InitialImageGroup)view.findViewById(R.id.iv);
             viewHolder.tvRecipient = (TextView)view.findViewById(R.id.tvRecipient);
             viewHolder.tvMsg = (TextView)view.findViewById(R.id.tvMsg);
             viewHolder.tvInfo = (TextView)view.findViewById(R.id.tvInfo);
@@ -71,12 +72,16 @@ public class HistoryAdapter extends RealmBaseAdapter<Table_History> implements L
         if(item!=null){
             //set data from item to ui
             String contactInfo = "";
+            String[] initial = new String[item.getRef_sch().getRecipients().size()];
             for(int a=0; a<item.getRef_sch().getRecipients().size(); a++){
                 ContactData contactData = ContactFunction.getPhoneContactInfo(context, item.getRef_sch().getRecipients().get(a).phoneNumber());
                 if(contactData != null){
                     contactInfo += contactData.displayName + ";";
+                    initial[a] = contactData.displayName.substring(0,1);
                 }
             }
+
+            viewHolder.iv.setValue(initial);
             viewHolder.tvRecipient.setText(contactInfo);
             viewHolder.tvMsg.setText(item.getRef_sch().getSch_msg());
             viewHolder.tvInfo.setText(GeneralFunction.getDateTime(new Date(item.getHst_send_date()), GeneralFunction.DATE_TIME_DISPLAY_FORMAT));
