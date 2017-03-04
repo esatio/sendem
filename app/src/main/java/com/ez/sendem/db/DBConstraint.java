@@ -28,4 +28,11 @@ public class DBConstraint {
         public static int MONTHLY = 3;
         public static int YEARLY = 4;
     }
+
+    public static class SCHEDULE_SEND_STATUS {
+        public static int NONE = 0;
+        public static int SENDING = 1;
+        public static int SENT = 2;
+        public static int FAILED = 3;
+    }
 }

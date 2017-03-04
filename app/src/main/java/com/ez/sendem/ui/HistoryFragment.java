@@ -10,9 +10,11 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.ez.sendem.R;
+import com.ez.sendem.adapter.HistoryAdapter;
 import com.ez.sendem.adapter.ScheduledAdapter;
 import com.ez.sendem.db.DBConstraint;
 import com.ez.sendem.db.RealmMainHelper;
+import com.ez.sendem.db.tables.Table_History;
 import com.ez.sendem.db.tables.Table_Scheduled;
 import com.ez.sendem.manager.FontManager;
 import com.ez.sendem.manager.PageManager;
@@ -33,7 +35,7 @@ public class HistoryFragment extends RootFrag implements View.OnClickListener, A
     private View view;
     private ListView listView;
     private TextView tvEmpty;
-    private ScheduledAdapter adapter;
+    private HistoryAdapter adapter;
     private FloatingActionButton fab_new;
 
     @Override
@@ -66,11 +68,10 @@ public class HistoryFragment extends RootFrag implements View.OnClickListener, A
     @Override
     public void onResume(){
         super.onResume();
-        RealmResults<Table_Scheduled> schedule= RealmMainHelper.getRealm()
-                                                .where(Table_Scheduled.class)
-                                                .equalTo(Table_Scheduled.STATUS, DBConstraint.SCHEDULE_STATUS.EXPIRED)
+        RealmResults<Table_History> schedule= RealmMainHelper.getRealm()
+                                                .where(Table_History.class)
                                                 .findAll();
-        adapter = new ScheduledAdapter(getContext(), schedule);
+        adapter = new HistoryAdapter(getContext(), schedule);
         listView.setAdapter(adapter);
     }
 

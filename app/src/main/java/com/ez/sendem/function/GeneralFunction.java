@@ -2,19 +2,19 @@ package com.ez.sendem.function;
 
 import android.content.Context;
 import android.os.Build;
-import android.widget.Toast;
 
 import com.ez.sendem.db.DBConstraint;
 import com.ez.sendem.db.RealmMainHelper;
+import com.ez.sendem.db.tables.Table_History;
 import com.ez.sendem.db.tables.Table_Scheduled;
 import com.ez.sendem.object.ContactData;
+import com.ez.sendem.object.SMSObject;
 import com.ez.sendem.services.MyService;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.concurrent.TimeUnit;
 
 import io.realm.RealmResults;
 
@@ -62,6 +62,7 @@ public class GeneralFunction {
     }
 
     public static void sendMessage(Context context){
+        SMSObject[] smsObject = new SMSObject[MyService.nextSchedule.size()];
         int[] arrId = new int[MyService.nextSchedule.size()];
         if(MyService.nextSchedule != null && MyService.nextSchedule.size() > 0){
             for(int a=0; a<MyService.nextSchedule.size(); a++){
@@ -73,16 +74,18 @@ public class GeneralFunction {
                         String text = schedule.getSch_msg();
                         for(int b=0; b<schedule.getRecipients().size(); b++){
                             String phoneNumber = schedule.getRecipients().get(b).phoneNumber();
-                            SMSFunction.sendSMS(context, phoneNumber, text);
+//                            SMSFunction.sendSMS(context, phoneNumber, text);
+
                             ContactData contactData = ContactFunction.getPhoneContactInfo(context, phoneNumber);
                             if(contactData==null){
                                 recipient += phoneNumber+"; ";
                             } else {
                                 recipient += phoneNumber+"("+contactData.displayName+"); ";
                             }
+                            smsObject[a] = new SMSObject(phoneNumber, text);
                         }
                     }
-                    NotifFunction.generateAndroidNotif(context, "Message has been sent to "+recipient);
+                    NotifFunction.generateAndroidNotif(context, "Sending message to "+recipient);
                 }
             }
         }
@@ -91,6 +94,15 @@ public class GeneralFunction {
         Table_Scheduled[] schedules = new Table_Scheduled[arrId.length];
         for(int a=0; a<arrId.length; a++) {
             schedules[a] = RealmMainHelper.getRealm().where(Table_Scheduled.class).equalTo(Table_Scheduled.PRIMARY_KEY, arrId[a]).findFirst();
+
+            //comment: insert ke table history
+            Table_History history = new Table_History();
+            history.setHst_id(RealmMainHelper.getPrimaryKey(Table_History.class, Table_History.PRIMARY_KEY));
+            history.setRef_sch(schedules[a]);
+            history.setHst_msg(schedules[a].getSch_msg());
+            history.setHst_send_date(schedules[a].getSch_next_active());
+            history.setHst_send_status(DBConstraint.SCHEDULE_SEND_STATUS.SENDING);
+            RealmMainHelper.insertDB(history);
         }
 
         try{
@@ -117,6 +129,27 @@ public class GeneralFunction {
         }catch (Exception e){
             e.printStackTrace();
             RealmMainHelper.getRealm().cancelTransaction();
+        }
+
+        for(int a=0; a<smsObject.length; a++){
+            SMSFunction.sendSMS(context, smsObject[a].phone, smsObject[a].text);
+        }
+    }
+
+    public static void changeHistorySentStatus(int schSendStatus){
+        RealmResults<Table_History> result = RealmMainHelper.getRealm()
+                                .where(Table_History.class)
+                                .equalTo(Table_History.SEND_STATUS, DBConstraint.SCHEDULE_SEND_STATUS.SENDING)
+                                .findAllSorted(Table_History.PRIMARY_KEY);
+        if(result.size()>0){
+            try{
+                RealmMainHelper.getRealm().beginTransaction();
+                result.get(0).setHst_send_status(schSendStatus);
+                RealmMainHelper.getRealm().commitTransaction();
+            }catch (Exception e){
+                e.printStackTrace();
+                RealmMainHelper.getRealm().cancelTransaction();
+            }
         }
     }
 
