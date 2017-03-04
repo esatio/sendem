@@ -24,6 +24,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Irine Lee, Mike Pence"
+            android:textStyle="bold"
             style="?textPrimary_2"/>
 
         <TextView
@@ -38,7 +39,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Once, 2/18/17, 1:00 PM"
-            style="?textSecondary_2"/>
+            style="?textSecondary_1"/>
 
     </LinearLayout>
 

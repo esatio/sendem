@@ -1,5 +1,7 @@
 package com.ez.sendem.db;
 
+import org.json.JSONArray;
+
 import io.realm.Realm;
 import io.realm.RealmObject;
 
@@ -9,6 +11,10 @@ public class RealmMainHelper {
     {
         Realm realm = Realm.getDefaultInstance();
         return realm;
+    }
+
+    public static void insertDB(Class realmClass, JSONArray str){
+        RealmBaseHelper.insertDB(getRealm(), realmClass, str);
     }
 
     public static void insertDB(RealmObject realmObject){

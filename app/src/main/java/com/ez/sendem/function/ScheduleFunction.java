@@ -14,16 +14,16 @@ public class ScheduleFunction {
         RealmResults<Table_Scheduled> results = RealmMainHelper.getRealm()
                                                     .where(Table_Scheduled.class)
                                                     .equalTo(Table_Scheduled.STATUS, DBConstraint.SCHEDULE_STATUS.ACTIVE)
-                                                    .findAllSorted(Table_Scheduled.DATE);
+                                                    .findAllSorted(Table_Scheduled.NEXT_ACTIVE_DATE);
 
         long nextTimeMillis=0;
         if(results.size()>0){
-            nextTimeMillis = results.get(0).getSch_date();
+            nextTimeMillis = results.get(0).getSch_next_active();
             table_scheduled.add(results.get(0));
         }
         boolean isCheckNext = true;
         for(int a=1; a<results.size() && isCheckNext; a++){
-            if(results.get(a).getSch_date() == nextTimeMillis){
+            if(results.get(a).getSch_next_active() == nextTimeMillis){
                 table_scheduled.add(results.get(a));
             } else {
                 isCheckNext = false;

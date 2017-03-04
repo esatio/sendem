@@ -19,10 +19,12 @@ import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.ez.sendem.R;
 import com.ez.sendem.db.tables.Table_Scheduled;
 import com.ez.sendem.function.ContactFunction;
+import com.ez.sendem.function.GeneralFunction;
 import com.ez.sendem.object.ContactData;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Date;
 
 import io.realm.OrderedRealmCollection;
 import io.realm.RealmBaseAdapter;
@@ -35,10 +37,12 @@ import io.realm.RealmResults;
 */
 public class ScheduledAdapter extends RealmBaseAdapter<Table_Scheduled> implements ListAdapter{
     private Context myContext;
+    private String[] repeatType_str;
 
     public ScheduledAdapter(Context context, OrderedRealmCollection<Table_Scheduled> realmResults) {
         super(context, realmResults);
         myContext = context;
+        repeatType_str = myContext.getResources().getStringArray(R.array.repeat_type_str);
     }
 
     class ViewHolder{
@@ -106,10 +110,22 @@ public class ScheduledAdapter extends RealmBaseAdapter<Table_Scheduled> implemen
             }
             viewHolder.tvRecipient.setText(contactInfo);
             viewHolder.tvMsg.setText(item.getSch_msg());
-            viewHolder.tvInfo.setText("Menyusul ya pak");
+            viewHolder.tvInfo.setText(getInfo(item.getSch_repeat_type(), item.getSch_next_active()));
         }
 
         return view;
+    }
+
+    private String getInfo(int repeatType, long nextActiveDate){
+        String info = repeatType_str[repeatType];
+
+        /*
+        comment:
+            1. ganti %1 dari repearType_str dengan tanggal next_active_date
+         */
+        info = info.replace("%date", GeneralFunction.getDateTime(new Date(nextActiveDate), GeneralFunction.DATE_TIME_DISPLAY_FORMAT));
+
+        return info;
     }
 }
 

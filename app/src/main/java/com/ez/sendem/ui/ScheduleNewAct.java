@@ -45,7 +45,7 @@ public class ScheduleNewAct extends RootToolbar implements View.OnClickListener,
 
     private EditText etTo, et_msg;
     private Button btn_schedule;
-    private LinearLayout layout_sch_datetime;
+    private LinearLayout layout_sch_datetime, layout_sch_ends;
     private DatePicker datePicker;
     private TimePicker timePicker;
     private TextView tvDateTime;
@@ -71,8 +71,10 @@ public class ScheduleNewAct extends RootToolbar implements View.OnClickListener,
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if(b){
                     spn_repeat.setVisibility(View.VISIBLE);
+                    layout_sch_ends.setVisibility(View.VISIBLE);
                 } else {
                     spn_repeat.setVisibility(View.GONE);
+                    layout_sch_ends.setVisibility(View.GONE);
                 }
             }
         });
@@ -83,6 +85,7 @@ public class ScheduleNewAct extends RootToolbar implements View.OnClickListener,
         spn_repeat.setAdapter(adtRepeatQuestion);
         spn_repeat.setOnItemSelectedListener(this);
 
+        layout_sch_ends = (LinearLayout)findViewById(R.id.layout_sch_ends);
         endsType = getResources().getStringArray(R.array.ends_type);
         spn_ends = (Spinner)findViewById(R.id.spn_ends);
         SpinnerAdapter adtEndsQuestion = new SpinnerAdapter(this,endsType);
@@ -216,8 +219,6 @@ public class ScheduleNewAct extends RootToolbar implements View.OnClickListener,
             recipientList.add(recipient);
         }
 
-//        Date selectedDate = GeneralFunction.getDateTimeFromPicker(datePicker, timePicker);
-
         Date date = GeneralFunction.parseStringToDate(selectedDate+" "+selectedTime, GeneralFunction.DATE_DISPLAY_FORMAT+" "+GeneralFunction.TIME_DISPLAY_FORMAT);
 
         Table_Scheduled schedule = new Table_Scheduled();
@@ -226,8 +227,14 @@ public class ScheduleNewAct extends RootToolbar implements View.OnClickListener,
         schedule.setSch_msg(et_msg.getText().toString());
         schedule.setSch_recipient_type(DBConstraint.SCHEDULE_RECIPIENT_TYPE.SMS);
         schedule.setSch_date(date.getTime());
-        schedule.setSch_ends_on(0);
-        schedule.setSch_repeat_type(0);
+        schedule.setSch_next_active(date.getTime());
+        if(cb_repeat.isChecked()){
+            schedule.setSch_ends_on(0);
+            schedule.setSch_repeat_type(spn_repeat.getSelectedItemPosition()+1);
+        } else {
+            schedule.setSch_ends_on(0);
+            schedule.setSch_repeat_type(DBConstraint.REPEAT_TYPE.NONE);
+        }
         schedule.setSch_status(DBConstraint.SCHEDULE_STATUS.ACTIVE);
         RealmMainHelper.insertDB(schedule);
 

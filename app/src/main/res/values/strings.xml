@@ -25,12 +25,22 @@
     <string name="empty_sch_inactive">inactive schedule is empty</string>
     <string name="empty_sch_history">history is empty</string>
 
+    <!-- urutannya disesuaikan dengan urutan yang ada di DBConstraint-->
     <string-array name="repeat_type">
         <item>Daily</item>
         <item>Weekly</item>
         <item>Monthly</item>
         <item>Yearly</item>
     </string-array>
+
+    <string-array name="repeat_type_str">
+        <item>Once, %date</item>
+        <item>Daily, %date</item>
+        <item>Weekly, %date</item>
+        <item>Monthly, %date</item>
+        <item>Yearly, %date</item>
+    </string-array>
+
 
     <string-array name="ends_type">
         <item>Never</item>

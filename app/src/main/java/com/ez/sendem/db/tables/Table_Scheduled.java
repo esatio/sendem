@@ -19,7 +19,8 @@ public class Table_Scheduled extends RealmObject {
     private int sch_id;
     private String sch_msg;
     private int sch_recipient_type;
-    private long sch_date;
+    private long sch_date; //comment: tanggal yang diset oleh pengguna
+    private long sch_next_active; //comment: tanggal selanjutnya alarm aktif
     private int sch_repeat_type;
     private int sch_ends_on;
     private RealmList<Table_Recipient> recipients; //comment: list di table, harus menggunakan RealmList (tidak boleh menggunakan List android)
@@ -33,7 +34,7 @@ public class Table_Scheduled extends RealmObject {
     @Ignore
     public static String PRIMARY_KEY = "sch_id";
     @Ignore
-    public static String DATE = "sch_date";
+    public static String NEXT_ACTIVE_DATE = "sch_next_active";
     @Ignore
     public static String STATUS = "sch_status";
 
@@ -78,6 +79,15 @@ public class Table_Scheduled extends RealmObject {
 
     public void setSch_date(long sch_date){
         this.sch_date = sch_date;
+    }
+
+
+    public long getSch_next_active(){
+        return sch_next_active;
+    }
+
+    public void setSch_next_active(long sch_next_active){
+        this.sch_next_active = sch_next_active;
     }
 
     public int getSch_repeat_type(){

@@ -17,4 +17,15 @@ public class DBConstraint {
         public static int INACTIVE = 1;
         public static int EXPIRED = 2;
     }
+
+    /*
+    comment: jika ubah REPEAT_TYPE, ingat cek lagi di string.xml
+     */
+    public static class REPEAT_TYPE {
+        public static int NONE = 0;
+        public static int DAILY = 1;
+        public static int WEEKLY = 2;
+        public static int MONTHLY = 3;
+        public static int YEARLY = 4;
+    }
 }

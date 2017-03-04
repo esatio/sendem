@@ -52,7 +52,7 @@ public class MyService extends Service{
     private void refreshAlarm(){
         nextSchedule = ScheduleFunction.getNextSchedule();
         if(nextSchedule!=null && nextSchedule.size()>0){
-            AlarmFunction.setAlarm(this, nextSchedule.get(0).getSch_date());
+            AlarmFunction.setAlarm(this, nextSchedule.get(0).getSch_next_active());
         }
     }
 

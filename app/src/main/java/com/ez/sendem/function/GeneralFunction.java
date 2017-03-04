@@ -2,6 +2,7 @@ package com.ez.sendem.function;
 
 import android.content.Context;
 import android.os.Build;
+import android.widget.Toast;
 
 import com.ez.sendem.db.DBConstraint;
 import com.ez.sendem.db.RealmMainHelper;
@@ -11,7 +12,11 @@ import com.ez.sendem.services.MyService;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
+
+import io.realm.RealmResults;
 
 public class GeneralFunction {
 
@@ -31,6 +36,7 @@ public class GeneralFunction {
         return result;
     }
 
+    public static final String DATE_TIME_DISPLAY_FORMAT="dd MMM yyyy HH:mm";
     public static final String DATE_DISPLAY_FORMAT="dd MMM yyyy";
     public static final String TIME_DISPLAY_FORMAT="HH:mm";
     public static String getDateTime(Date date, String dateTimeFormat){
@@ -76,27 +82,59 @@ public class GeneralFunction {
                             }
                         }
                     }
-                    NotifFunction.generateAndroidNotif(context, "Scheduler has been sent message to "+recipient);
+                    NotifFunction.generateAndroidNotif(context, "Message has been sent to "+recipient);
                 }
             }
         }
 
         //comment: update table
-        Table_Scheduled[] updateTable = new Table_Scheduled[MyService.nextSchedule.size()];
-        for(int a=0; a<arrId.length; a++){
-            Table_Scheduled schedule = RealmMainHelper.getRealm().where(Table_Scheduled.class).equalTo(Table_Scheduled.PRIMARY_KEY, arrId[a]).findFirst();
-
-            Table_Scheduled newSchedule = new Table_Scheduled();
-            newSchedule.setSch_id(schedule.getSch_id());
-            newSchedule.setSch_msg(schedule.getSch_msg());
-            newSchedule.setSch_recipient_type(schedule.getSch_recipient_type());
-            newSchedule.setSch_date(schedule.getSch_date());
-            newSchedule.setSch_repeat_type(schedule.getSch_repeat_type());
-            newSchedule.setSch_ends_on(schedule.getSch_ends_on());
-            newSchedule.setRecipients(schedule.getRecipients());
-            newSchedule.setSch_status(DBConstraint.SCHEDULE_STATUS.EXPIRED);
-            updateTable[a] = newSchedule;
+        Table_Scheduled[] schedules = new Table_Scheduled[arrId.length];
+        for(int a=0; a<arrId.length; a++) {
+            schedules[a] = RealmMainHelper.getRealm().where(Table_Scheduled.class).equalTo(Table_Scheduled.PRIMARY_KEY, arrId[a]).findFirst();
         }
-        RealmMainHelper.insertDB(updateTable);
+
+        try{
+            RealmMainHelper.getRealm().beginTransaction();
+            for(int a=0; a<schedules.length; a++) {
+                if(schedules[a].getSch_repeat_type() == DBConstraint.REPEAT_TYPE.NONE){
+                    schedules[a].setSch_next_active(schedules[a].getSch_next_active());
+                    schedules[a].setSch_status(DBConstraint.SCHEDULE_STATUS.EXPIRED);
+                } else if(schedules[a].getSch_repeat_type() == DBConstraint.REPEAT_TYPE.DAILY){
+                    schedules[a].setSch_next_active(schedules[a].getSch_next_active() + (24*60*60*1000));
+                    schedules[a].setSch_status(DBConstraint.SCHEDULE_STATUS.ACTIVE);
+                } else if(schedules[a].getSch_repeat_type() == DBConstraint.REPEAT_TYPE.WEEKLY){
+                    schedules[a].setSch_next_active(schedules[a].getSch_next_active() + (7*24*60*60*1000));
+                    schedules[a].setSch_status(DBConstraint.SCHEDULE_STATUS.ACTIVE);
+                } else if(schedules[a].getSch_repeat_type() == DBConstraint.REPEAT_TYPE.MONTHLY){
+                    schedules[a].setSch_next_active(getCurrentDatePlusMonth(schedules[a].getSch_next_active(), 1).getTime());
+                    schedules[a].setSch_status(DBConstraint.SCHEDULE_STATUS.ACTIVE);
+                } else if(schedules[a].getSch_repeat_type() == DBConstraint.REPEAT_TYPE.YEARLY){
+                    schedules[a].setSch_next_active(getCurrentDatePlusYear(schedules[a].getSch_next_active(), 1).getTime());
+                    schedules[a].setSch_status(DBConstraint.SCHEDULE_STATUS.ACTIVE);
+                }
+            }
+            RealmMainHelper.getRealm().commitTransaction();
+        }catch (Exception e){
+            e.printStackTrace();
+            RealmMainHelper.getRealm().cancelTransaction();
+        }
+    }
+
+    public static Date getCurrentDatePlusMonth(long date, int month)
+    {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(date);
+        calendar.add(Calendar.MONTH, month);
+        Date newDate = calendar.getTime();
+        return newDate;
+    }
+
+    public static Date getCurrentDatePlusYear(long date, int year)
+    {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(date);
+        calendar.add(Calendar.YEAR, year);
+        Date newDate = calendar.getTime();
+        return newDate;
     }
 }
