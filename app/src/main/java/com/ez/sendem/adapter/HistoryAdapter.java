@@ -72,13 +72,11 @@ public class HistoryAdapter extends RealmBaseAdapter<Table_History> implements L
         if(item!=null){
             //set data from item to ui
             String contactInfo = "";
-            String[] initial = new String[item.getRef_sch().getRecipients().size()];
-            for(int a=0; a<item.getRef_sch().getRecipients().size(); a++){
-                ContactData contactData = ContactFunction.getPhoneContactInfo(context, item.getRef_sch().getRecipients().get(a).phoneNumber());
-                if(contactData != null){
-                    contactInfo += contactData.displayName + ";";
-                    initial[a] = contactData.displayName.substring(0,1);
-                }
+            String[] initial = new String[1];
+            ContactData contactData = ContactFunction.getPhoneContactInfo(context, item.getPhoneNumber());
+            if(contactData != null){
+                contactInfo += contactData.displayName;
+                initial[0] = contactData.displayName.substring(0,1);
             }
 
             viewHolder.iv.setValue(initial);

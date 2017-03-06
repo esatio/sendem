@@ -16,6 +16,7 @@ import com.ez.sendem.ui.HistoryFragment;
 import com.ez.sendem.ui.InactiveFragment;
 import com.ez.sendem.ui.LoadingAct;
 import com.ez.sendem.ui.RootNavBar;
+import com.ez.sendem.ui.ScheduleDetailAct;
 import com.ez.sendem.ui.ScheduleNewAct;
 import com.ez.sendem.ui.ScheduledFragment;
 
@@ -132,6 +133,13 @@ public class PageManager {
 
     public static void open_ScheduleNew(Context context){
         Intent intent = new Intent(context, ScheduleNewAct.class);
+        context.startActivity(intent);
+    }
+
+    public static final String KEY_SCH_ID = "sch_id";
+    public static void open_ScheduleDetail(Context context, int sch_id){
+        Intent intent = new Intent(context, ScheduleDetailAct.class);
+        intent.putExtra(KEY_SCH_ID, sch_id);
         context.startActivity(intent);
     }
 

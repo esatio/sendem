@@ -16,6 +16,7 @@ import com.ez.sendem.db.RealmMainHelper;
 import com.ez.sendem.db.tables.Table_Scheduled;
 import com.ez.sendem.dialog.DlgAddNew;
 import com.ez.sendem.manager.FontManager;
+import com.ez.sendem.manager.PageManager;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -97,6 +98,8 @@ public class ScheduledFragment extends RootFrag implements View.OnClickListener,
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
         long sch_id = adapter.getItemId(position);
-//        PageManager.open_ViewScheduledDetail(getContext(), (int)sch_id);
+        if(sch_id!=0){
+            PageManager.open_ScheduleDetail(getContext(), (int)sch_id);
+        }
     }
 }

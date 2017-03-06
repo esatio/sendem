@@ -56,6 +56,9 @@
         <activity android:name=".ui.ScheduleNewAct"
             android:windowSoftInputMode="adjustResize"
             android:screenOrientation="portrait"></activity>
+        <activity android:name=".ui.ScheduleDetailAct"
+            android:windowSoftInputMode="adjustResize"
+            android:screenOrientation="portrait"></activity>
 
 
         <!--
@@ -65,6 +68,8 @@
          */
          -->
         <service android:name=".services.MyService" />
+        <service android:name=".services.MyJobServices"
+            android:permission="android.permission.BIND_JOB_SERVICE"/>
 
         <!--
          /*

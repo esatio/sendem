@@ -22,7 +22,7 @@ public class Table_Scheduled extends RealmObject {
     private long sch_date; //comment: tanggal yang diset oleh pengguna
     private long sch_next_active; //comment: tanggal selanjutnya alarm aktif
     private int sch_repeat_type;
-    private int sch_ends_on;
+    private long sch_ends_on;
     private RealmList<Table_Recipient> recipients; //comment: list di table, harus menggunakan RealmList (tidak boleh menggunakan List android)
     private int sch_status; //comment: untuk menentukan apakah masih aktif atau ga
 
@@ -98,11 +98,11 @@ public class Table_Scheduled extends RealmObject {
         this.sch_repeat_type = sch_repeat_type;
     }
 
-    public int getSch_ends_on(){
+    public long getSch_ends_on(){
         return sch_ends_on;
     }
 
-    public void setSch_ends_on(int sch_ends_on){
+    public void setSch_ends_on(long sch_ends_on){
         this.sch_ends_on = sch_ends_on;
     }
 

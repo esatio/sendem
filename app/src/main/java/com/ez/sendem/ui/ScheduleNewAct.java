@@ -46,9 +46,10 @@ public class ScheduleNewAct extends RootToolbar implements View.OnClickListener,
     private EditText etTo, et_msg;
     private Button btn_schedule;
     private LinearLayout layout_sch_datetime, layout_sch_ends;
-    private DatePicker datePicker;
+    private DatePicker datePicker, datePickerEnds;
     private TimePicker timePicker;
-    private TextView tvDateTime;
+    private TextView tvDateTime, tvDateEnd;
+    private long selectedEndDate=0;
     private String str_selectedContact = "", selectedDate="", selectedTime="";
     private ArrayList<ContactData> selectedContact = new ArrayList<>();
 
@@ -64,6 +65,9 @@ public class ScheduleNewAct extends RootToolbar implements View.OnClickListener,
 
         fb_addrecipient = (FontButton)findViewById(R.id.fb_addrecipient);
         fb_addrecipient.setOnClickListener(this);
+
+        btn_schedule = (Button)findViewById(R.id.btn_schedule);
+        btn_schedule.setOnClickListener(this);
 
         cb_repeat = (CheckBox)findViewById(R.id.cb_repeat);
         cb_repeat.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -84,16 +88,6 @@ public class ScheduleNewAct extends RootToolbar implements View.OnClickListener,
         SpinnerAdapter adtRepeatQuestion = new SpinnerAdapter(this,repeatType);
         spn_repeat.setAdapter(adtRepeatQuestion);
         spn_repeat.setOnItemSelectedListener(this);
-
-        layout_sch_ends = (LinearLayout)findViewById(R.id.layout_sch_ends);
-        endsType = getResources().getStringArray(R.array.ends_type);
-        spn_ends = (Spinner)findViewById(R.id.spn_ends);
-        SpinnerAdapter adtEndsQuestion = new SpinnerAdapter(this,endsType);
-        spn_ends.setAdapter(adtEndsQuestion);
-        spn_ends.setOnItemSelectedListener(this);
-
-        btn_schedule = (Button)findViewById(R.id.btn_schedule);
-        btn_schedule.setOnClickListener(this);
 
         layout_sch_datetime = (LinearLayout)findViewById(R.id.layout_sch_datetime);
         layout_sch_datetime.setOnClickListener(this);
@@ -121,6 +115,31 @@ public class ScheduleNewAct extends RootToolbar implements View.OnClickListener,
             public void onTimeChanged(TimePicker timePicker, int hour, int minute) {
                 selectedTime = GeneralFunction.getHourAndMinuteString(hour, minute);
                 refreshDateTimeTextView();
+            }
+        });
+
+        layout_sch_ends = (LinearLayout)findViewById(R.id.layout_sch_ends);
+        endsType = getResources().getStringArray(R.array.ends_type);
+        spn_ends = (Spinner)findViewById(R.id.spn_ends);
+        SpinnerAdapter adtEndsQuestion = new SpinnerAdapter(this,endsType);
+        spn_ends.setAdapter(adtEndsQuestion);
+        spn_ends.setOnItemSelectedListener(this);
+
+        tvDateEnd = (TextView)findViewById(R.id.tvDateEnd);
+        datePickerEnds = (DatePicker)findViewById(R.id.datePickerEnds);
+        Calendar calendarEnd = Calendar.getInstance();
+        calendarEnd.setTimeInMillis(System.currentTimeMillis()+(24*60*60*1000));
+        selectedEndDate = calendarEnd.getTimeInMillis();
+        tvDateEnd.setText(GeneralFunction.getDateTime(new Date(selectedEndDate), GeneralFunction.DATE_DISPLAY_FORMAT));
+        datePickerEnds.init(calendarEnd.get(Calendar.YEAR), calendarEnd.get(Calendar.MONTH), calendarEnd.get(Calendar.DAY_OF_MONTH), new DatePicker.OnDateChangedListener() {
+
+            @Override
+            public void onDateChanged(DatePicker datePicker, int year, int month, int dayOfMonth) {
+                //month yang dihasilkan = 0-11
+                Calendar calendar = Calendar.getInstance();
+                calendar.set(year, month, dayOfMonth);
+                selectedEndDate = calendar.getTimeInMillis();
+                tvDateEnd.setText(GeneralFunction.getDateTime(calendar.getTime(), GeneralFunction.DATE_DISPLAY_FORMAT));
             }
         });
 
@@ -157,7 +176,15 @@ public class ScheduleNewAct extends RootToolbar implements View.OnClickListener,
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-
+        if(adapterView.equals(spn_ends)){
+            if(i==DBConstraint.END_TYPE.NEVER){
+                tvDateEnd.setVisibility(View.GONE);
+                datePickerEnds.setVisibility(View.GONE);
+            } else {
+                tvDateEnd.setVisibility(View.VISIBLE);
+                datePickerEnds.setVisibility(View.VISIBLE);
+            }
+        }
     }
 
     @Override
@@ -187,8 +214,7 @@ public class ScheduleNewAct extends RootToolbar implements View.OnClickListener,
                     Cursor c = cr.query(contactUri, null, null, null, null);
 
                     if (c.moveToFirst()) {
-                        String id =
-                                c.getString(c.getColumnIndexOrThrow(ContactsContract.Contacts._ID));
+                        String id = c.getString(c.getColumnIndexOrThrow(ContactsContract.Contacts._ID));
 
                         String displayName = c.getString(c.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
                         String phoneNumber = c.getString(c.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
@@ -200,7 +226,7 @@ public class ScheduleNewAct extends RootToolbar implements View.OnClickListener,
                         contactData.displayName = displayName;
                         contactData.phoneNumber = phoneNumber;
                         contactData.photoUri = photoUri;
-                        str_selectedContact += displayName +"("+phoneNumber+")";
+                        str_selectedContact += displayName +"("+phoneNumber+")\n";
                         refreshRecipientEditText();
                         selectedContact.add(contactData);
                     }
@@ -229,7 +255,13 @@ public class ScheduleNewAct extends RootToolbar implements View.OnClickListener,
         schedule.setSch_date(date.getTime());
         schedule.setSch_next_active(date.getTime());
         if(cb_repeat.isChecked()){
-            schedule.setSch_ends_on(0);
+            if(spn_ends.getSelectedItemPosition() == DBConstraint.END_TYPE.NEVER){ //never
+                schedule.setSch_ends_on(0);
+            } else if(spn_ends.getSelectedItemPosition() == DBConstraint.END_TYPE.AFTER){ //after
+                schedule.setSch_ends_on(selectedEndDate+(24*60*60*1000));
+            } else if(spn_ends.getSelectedItemPosition() == DBConstraint.END_TYPE.ON) { //on
+                schedule.setSch_ends_on(selectedEndDate);
+            }
             schedule.setSch_repeat_type(spn_repeat.getSelectedItemPosition()+1);
         } else {
             schedule.setSch_ends_on(0);

@@ -10,11 +10,13 @@
     <string name="drw_exit">EXIT</string>
 
     <string name="schedulenew_title">Add New Schedule</string>
+    <string name="scheduledetail_title">Schedule Detail</string>
     <string name="to_label">TO : </string>
     <string name="msg_label">MESSAGE : </string>
     <string name="sch_label">SCHEDULE : </string>
     <string name="repeat_label">REPEAT : </string>
     <string name="ends_label">ENDS : </string>
+    <string name="status_label">STATUS : </string>
     <string name="btn_schedule">SCHEDULE IT!</string>
 
     <string name="dialog_addnewtitle">Add Schedule For</string>
@@ -24,6 +26,8 @@
     <string name="empty_sch_active">active schedule is empty</string>
     <string name="empty_sch_inactive">inactive schedule is empty</string>
     <string name="empty_sch_history">history is empty</string>
+
+    <string name="btn_setToInactive">Set To Inactive</string>
 
     <!-- urutannya disesuaikan dengan urutan yang ada di DBConstraint-->
     <string-array name="repeat_type">
@@ -46,5 +50,11 @@
         <item>Never</item>
         <item>After...</item>
         <item>On...</item>
+    </string-array>
+
+    <string-array name="sch_status">
+        <item>Active</item>
+        <item>InActive</item>
+        <item>Expired</item>
     </string-array>
 </resources>

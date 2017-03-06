@@ -215,14 +215,38 @@
                     android:text="@string/ends_label"
                     style="?textSecondary_1"/>
 
-                <Spinner
-                    android:id="@+id/spn_ends"
+                <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:background="@drawable/spn_selector"
-                    android:layout_marginLeft="8dp"
-                    style="?textPrimary_1"></Spinner>
+                    android:orientation="vertical">
+
+                    <Spinner
+                        android:id="@+id/spn_ends"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/spn_selector"
+                        android:paddingLeft="8dp"
+                        style="?textPrimary_1"></Spinner>
+
+                    <TextView
+                        android:id="@+id/tvDateEnd"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="8dp"
+                        style="?textPrimary_2"/>
+
+                    <DatePicker
+                        android:id="@+id/datePickerEnds"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:calendarViewShown="false"
+                        android:spinnersShown="true"
+                        android:visibility="gone"
+                        android:layout_marginBottom="8dp"></DatePicker>
+
+                </LinearLayout>
+
             </LinearLayout>
 
         </LinearLayout>

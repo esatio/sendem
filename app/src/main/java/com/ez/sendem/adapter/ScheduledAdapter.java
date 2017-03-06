@@ -51,6 +51,11 @@ public class ScheduledAdapter extends RealmBaseAdapter<Table_Scheduled> implemen
         TextView tvRecipient, tvMsg, tvInfo;
     }
 
+    @Override
+    public long getItemId(int position){
+        return adapterData.get(position).getSch_id();
+    }
+
     ViewHolder viewHolder;
     @Override
     public View getView(int position, View view, ViewGroup parent) {

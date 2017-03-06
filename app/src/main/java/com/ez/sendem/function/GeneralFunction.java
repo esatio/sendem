@@ -2,6 +2,7 @@ package com.ez.sendem.function;
 
 import android.content.Context;
 import android.os.Build;
+import android.widget.Toast;
 
 import com.ez.sendem.db.DBConstraint;
 import com.ez.sendem.db.RealmMainHelper;
@@ -13,8 +14,10 @@ import com.ez.sendem.services.MyService;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import io.realm.RealmResults;
 
@@ -62,7 +65,7 @@ public class GeneralFunction {
     }
 
     public static void sendMessage(Context context){
-        SMSObject[] smsObject = new SMSObject[MyService.nextSchedule.size()];
+        ArrayList<SMSObject> smsObject = new ArrayList<>();
         int[] arrId = new int[MyService.nextSchedule.size()];
         if(MyService.nextSchedule != null && MyService.nextSchedule.size() > 0){
             for(int a=0; a<MyService.nextSchedule.size(); a++){
@@ -82,7 +85,7 @@ public class GeneralFunction {
                             } else {
                                 recipient += phoneNumber+"("+contactData.displayName+"); ";
                             }
-                            smsObject[a] = new SMSObject(phoneNumber, text);
+                            smsObject.add(new SMSObject(phoneNumber, text));
 
                             //comment: insert ke table history
                             Table_History history = new Table_History();
@@ -91,7 +94,7 @@ public class GeneralFunction {
                             history.setHst_msg(schedule.getSch_msg());
                             history.setHst_send_date(schedule.getSch_next_active());
                             history.setHst_send_status(DBConstraint.SCHEDULE_SEND_STATUS.SENDING);
-                            history.setPhoneNumber(schedule.getRecipients().get(b).phoneNumber());
+                            history.setPhoneNumber(phoneNumber);
                             RealmMainHelper.insertDB(history);
                         }
                     }
@@ -112,18 +115,24 @@ public class GeneralFunction {
                 if(schedules[a].getSch_repeat_type() == DBConstraint.REPEAT_TYPE.NONE){
                     schedules[a].setSch_next_active(schedules[a].getSch_next_active());
                     schedules[a].setSch_status(DBConstraint.SCHEDULE_STATUS.EXPIRED);
-                } else if(schedules[a].getSch_repeat_type() == DBConstraint.REPEAT_TYPE.DAILY){
-                    schedules[a].setSch_next_active(schedules[a].getSch_next_active() + (24*60*60*1000));
-                    schedules[a].setSch_status(DBConstraint.SCHEDULE_STATUS.ACTIVE);
-                } else if(schedules[a].getSch_repeat_type() == DBConstraint.REPEAT_TYPE.WEEKLY){
-                    schedules[a].setSch_next_active(schedules[a].getSch_next_active() + (7*24*60*60*1000));
-                    schedules[a].setSch_status(DBConstraint.SCHEDULE_STATUS.ACTIVE);
-                } else if(schedules[a].getSch_repeat_type() == DBConstraint.REPEAT_TYPE.MONTHLY){
-                    schedules[a].setSch_next_active(getCurrentDatePlusMonth(schedules[a].getSch_next_active(), 1).getTime());
-                    schedules[a].setSch_status(DBConstraint.SCHEDULE_STATUS.ACTIVE);
-                } else if(schedules[a].getSch_repeat_type() == DBConstraint.REPEAT_TYPE.YEARLY){
-                    schedules[a].setSch_next_active(getCurrentDatePlusYear(schedules[a].getSch_next_active(), 1).getTime());
-                    schedules[a].setSch_status(DBConstraint.SCHEDULE_STATUS.ACTIVE);
+                } else {
+                    long next_active_millis = 0;
+                    if(schedules[a].getSch_repeat_type() == DBConstraint.REPEAT_TYPE.DAILY){
+                        next_active_millis = schedules[a].getSch_next_active() + (24*60*60*1000);
+                    } else if(schedules[a].getSch_repeat_type() == DBConstraint.REPEAT_TYPE.WEEKLY){
+                        next_active_millis = schedules[a].getSch_next_active() + (7*24*60*60*1000);
+                    } else if(schedules[a].getSch_repeat_type() == DBConstraint.REPEAT_TYPE.MONTHLY){
+                        next_active_millis = getCurrentDatePlusMonth(schedules[a].getSch_next_active(), 1).getTime();
+                    } else if(schedules[a].getSch_repeat_type() == DBConstraint.REPEAT_TYPE.YEARLY){
+                        next_active_millis = getCurrentDatePlusYear(schedules[a].getSch_next_active(), 1).getTime();
+                    }
+
+                    if(isExpired(next_active_millis, schedules[a].getSch_ends_on())){
+                        schedules[a].setSch_status(DBConstraint.SCHEDULE_STATUS.EXPIRED);
+                    } else {
+                        schedules[a].setSch_next_active(next_active_millis);
+                        schedules[a].setSch_status(DBConstraint.SCHEDULE_STATUS.ACTIVE);
+                    }
                 }
             }
             RealmMainHelper.getRealm().commitTransaction();
@@ -132,8 +141,19 @@ public class GeneralFunction {
             RealmMainHelper.getRealm().cancelTransaction();
         }
 
-        for(int a=0; a<smsObject.length; a++){
-            SMSFunction.sendSMS(context, smsObject[a].phone, smsObject[a].text);
+        for(int a=0; a<smsObject.size(); a++){
+            Toast.makeText(context, "send SMS to " + smsObject.get(a).phone, Toast.LENGTH_SHORT).show();
+            SMSFunction.sendSMS(context, smsObject.get(a).phone, smsObject.get(a).text);
+        }
+    }
+
+    private static boolean isExpired(long next_active_millis, long endsOn){
+        if(endsOn == 0){
+            return false;
+        } else if(next_active_millis > endsOn){
+            return true;
+        } else{
+            return false;
         }
     }
 

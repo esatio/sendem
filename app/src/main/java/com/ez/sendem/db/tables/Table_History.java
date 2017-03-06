@@ -78,7 +78,7 @@ public class Table_History extends RealmObject {
         this.hst_send_status = hst_send_status;
     }
 
-    public String phoneNumber(){
+    public String getPhoneNumber(){
         return phoneNumber;
     }
 

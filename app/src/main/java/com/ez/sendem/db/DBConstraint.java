@@ -12,6 +12,9 @@ public class DBConstraint {
         public static int LINE = 2;
     }
 
+    /*
+    comment: jika ubah SCHEDULE_STATUS, ingat cek lagi di string.xml
+     */
     public static class SCHEDULE_STATUS {
         public static int ACTIVE = 0;
         public static int INACTIVE = 1;
@@ -27,6 +30,15 @@ public class DBConstraint {
         public static int WEEKLY = 2;
         public static int MONTHLY = 3;
         public static int YEARLY = 4;
+    }
+
+    /*
+   comment: jika ubah END_TYPE, ingat cek lagi di string.xml
+    */
+    public static class END_TYPE {
+        public static int NEVER = 0;
+        public static int AFTER = 1;
+        public static int ON = 2;
     }
 
     public static class SCHEDULE_SEND_STATUS {
