@@ -22,7 +22,7 @@ public class DlgAddNew extends DlgFragment implements AdapterView.OnItemClickLis
         view = inflater.inflate(R.layout.dialog_addnew, null);
 
         appTypes = new AppTypeData[]{
-                new AppTypeData(R.drawable.ic_msg, getString(R.string.apptype_sms)),
+                new AppTypeData(R.string.fa_comment, getString(R.string.apptype_sms)),
         };
 
         listView = (ListView)view.findViewById(R.id.listView);

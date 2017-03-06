@@ -6,6 +6,10 @@ import android.util.AttributeSet;
 import android.widget.Button;
 import android.widget.TextView;
 
+/*
+note untuk class ini:
+-. class ini merupakan component button yang menggunakan awesomefont
+ */
 public class FontButton extends Button {
 
     public FontButton(Context context) {

@@ -2,22 +2,15 @@ package com.ez.sendem.adapter;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
-import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.ez.sendem.R;
 import com.ez.sendem.adapter.object.AppTypeData;
-
-import java.util.ArrayList;
+import com.ez.sendem.ui.component.FontTextView;
 
 public class AppTypeAdapter extends ArrayAdapter {
     private Context myContext;
@@ -30,7 +23,7 @@ public class AppTypeAdapter extends ArrayAdapter {
     }
 
     class ViewHolder{
-        ImageView iv;
+        FontTextView tvAppLogo;
         TextView tvAppName;
     }
 
@@ -53,7 +46,7 @@ public class AppTypeAdapter extends ArrayAdapter {
             view = inflater.inflate(R.layout.apptypeadapter_item, null);
 
             viewHolder = new ViewHolder();
-            viewHolder.iv = (ImageView)view.findViewById(R.id.iv);
+            viewHolder.tvAppLogo = (FontTextView)view.findViewById(R.id.tvAppLogo);
             viewHolder.tvAppName = (TextView)view.findViewById(R.id.tvAppName);
 
             view.setTag(viewHolder);
@@ -63,23 +56,9 @@ public class AppTypeAdapter extends ArrayAdapter {
 
         AppTypeData item = data[position];
         if(item!=null){
-            Glide.with(getContext()).load(R.drawable.pp).asBitmap().centerCrop().into(new BitmapImageViewTarget(viewHolder.iv) {
-                @Override
-                protected void setResource(Bitmap resource) {
-                    RoundedBitmapDrawable circularBitmapDrawable =
-                            RoundedBitmapDrawableFactory.create(getContext().getResources(), resource);
-                    circularBitmapDrawable.setCircular(true);
-                    viewHolder.iv.setImageDrawable(circularBitmapDrawable);
-                }
-            });
-
+            viewHolder.tvAppLogo.setText(item.pictureRes);
             viewHolder.tvAppName.setText(item.appName);
         }
-//        Table_Scheduled item = scheduled.get(position);
-//        if(item!=null){
-//            //set data from item to ui
-//            viewHolder.tvInfo.setText(item.getSkr_no_form());
-//        }
 
         return view;
     }

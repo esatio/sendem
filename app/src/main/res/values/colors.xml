@@ -10,7 +10,8 @@
 
     <color name="colorTextPrimary">#000000</color>
     <color name="colorTextSecondary">#666666</color>
-    <color name="colorDivider">#BBBBBB</color>
+    <!--<color name="colorDivider">#BBBBBB</color>-->
+    <color name="colorDivider">#999999</color>
     <color name="colorBackground">#32666666</color>
     <color name="colorDisabled">#32666666</color>
     <color name="colorPopup">#FFFFFF</color>

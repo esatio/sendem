@@ -28,7 +28,7 @@
                     android:id="@+id/fontTextViewRight"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentRight="true"
                     android:gravity="center_vertical"
                     android:text="@string/fa_check"
                     android:paddingLeft="16dp"
@@ -39,7 +39,7 @@
                     android:id="@+id/tvTitle"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_toRightOf="@id/fontTextViewRight"
+                    android:layout_toLeftOf="@id/fontTextViewRight"
                     android:gravity="center_vertical"
                     android:textStyle="normal"
                     style="?textWhite_3" />

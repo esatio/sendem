@@ -9,6 +9,17 @@
         android:layout_height="match_parent">
 
     </ListView>
+
+    <TextView
+        android:id="@+id/tvEmpty"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:text="@string/empty_sch_active"
+        android:padding="8dp"
+        android:gravity="center_horizontal"
+        style="?textSecondary_0">
+    </TextView>
     
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab_new"

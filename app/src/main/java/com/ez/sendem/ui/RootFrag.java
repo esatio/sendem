@@ -4,6 +4,10 @@ import android.content.Context;
 import android.net.Uri;
 import android.support.v4.app.Fragment;
 
+/*
+note untuk class ini:
+-. class ini adalah base class untuk halaman-halaman dari menu drawer
+ */
 public class RootFrag extends Fragment {
 
     protected OnFragmentInteractionListener mListener;

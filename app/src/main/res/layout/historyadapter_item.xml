@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.ez.sendem.ui.component.InitialImageGroup
+        android:id="@+id/iv"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_margin="16dp" >
+    </com.ez.sendem.ui.component.InitialImageGroup>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_toRightOf="@id/iv"
+        android:layout_alignParentRight="true"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/tvRecipient"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Irine Lee, Mike Pence"
+            android:textStyle="bold"
+            style="?textPrimary_2"/>
+
+        <TextView
+            android:id="@+id/tvMsg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Friendly meeting reminder, 2/18/17, R"
+            style="?textPrimary_1"/>
+
+        <TextView
+            android:id="@+id/tvInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Once, 2/18/17, 1:00 PM"
+            style="?textSecondary_1"/>
+
+    </LinearLayout>
+
+    <com.ez.sendem.ui.component.FontTextView
+        android:id="@+id/ftv_send_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="8dp"
+        style="?textAccent_1"/>
+
+</RelativeLayout>

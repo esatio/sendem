@@ -26,33 +26,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.Timer;
-import java.util.TimerTask;
-
-import android.app.Activity;
-import android.content.Context;
-import android.graphics.Bitmap;
-import android.net.Uri;
-import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
-import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.BaseAdapter;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
@@ -60,10 +33,16 @@ import com.ez.sendem.R;
 import com.ez.sendem.manager.FontManager;
 import com.ez.sendem.manager.PageManager;
 
-import java.util.ArrayList;
-import java.util.Timer;
-import java.util.TimerTask;
+/*
+note untuk class ini:
+-. class ini adalah class halaman utama dari aplikasi Send'em
+-. class ini terdiri dari drawer(bagian kiri)
+*/
 
+/*
+//comment : onItemClick - 2
+    1. ketika pasang setOnItemClickListener(this), jangan lupa tambahkan "implements AdapterView.OnItemClickListener"
+*/
 public class RootNavBar extends RootAct
         implements AdapterView.OnItemClickListener, RootFrag.OnFragmentInteractionListener {
 
@@ -77,6 +56,10 @@ public class RootNavBar extends RootAct
     private ImageView imageView;
     /////////////
 
+    /*
+    //comment : rootnavbar - 1
+        1. indexing dari semua menu di drawer
+    */
     protected static int CURRENT_INDEX = 1;
     private static int INDEX_SCHEDULED = 1;
     private static int INDEX_INACTIVE= 2;
@@ -94,6 +77,11 @@ public class RootNavBar extends RootAct
         tvTitle = (TextView)findViewById(R.id.tvTitle);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+
+        /*
+        //comment : drawermenu -- start
+            1. jika tidak ada kebutuhan khusus, selalu code sedemikian rupa
+        */
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close){
 
@@ -109,6 +97,9 @@ public class RootNavBar extends RootAct
         };
         drawer.setDrawerListener(toggle);
         toggle.syncState();
+        /*
+        //comment : drawermenu -- end
+        */
 
         drawerHeader = getLayoutInflater().inflate(R.layout.drawerheader, null);
         listViewDrawerMenu = (ListView)findViewById(R.id.listViewDrawerMenu);
@@ -116,6 +107,12 @@ public class RootNavBar extends RootAct
 
         imageView = (ImageView)drawerHeader.findViewById(R.id.imageView);
 
+        /*
+        //comment :
+            1. library Glide digunakan untuk set image.
+            2. Penggunaan library ini untuk mencegah error OutOfMemory(OOM) karena image dari android dikenal sering OOM
+            3. Library ini juga memudahkan membuat gambar rounded.
+        */
         Glide.with(this).load(R.drawable.ic_launcher).asBitmap().centerCrop().into(new BitmapImageViewTarget(imageView) {
             @Override
             protected void setResource(Bitmap resource) {
@@ -126,6 +123,10 @@ public class RootNavBar extends RootAct
             }
         });
 
+        /*
+        //comment : onItemClick - 4
+            -. pendaftaran menu untuk drawer
+        */
         arrDrawerMenuItems = new ArrayList<>();
         arrDrawerMenuItems.add(new DrawerMenuItem(INDEX_SCHEDULED, R.string.fa_calendar, getString(R.string.drw_sheduled), false));
         arrDrawerMenuItems.add(new DrawerMenuItem(INDEX_INACTIVE, R.string.fa_bell_slash, getString(R.string.drw_inactive), false));
@@ -134,15 +135,31 @@ public class RootNavBar extends RootAct
 
         adapter = new DrawerMenuAdapter(this, arrDrawerMenuItems);
         content = (FrameLayout)findViewById(R.id.content);
+        /*
+        //comment : onItemClick - 5
+            -. set adapter ke listview
+        */
         listViewDrawerMenu.setAdapter(adapter);
+        /*
+        //comment : onItemClick - 1
+            1. untuk mengatur apa yang dilakukan ketika klik item di list drawer menu, maka kita harus pasang setOnItemClickListener
+        */
         listViewDrawerMenu.setOnItemClickListener(this);
+        adapter.setSelectedIndex(INDEX_SCHEDULED);
 
+        /*
+        //comment : rootnavbar - 2
+            1. selalu buka halaman schedule pas awal
+        */
         CURRENT_INDEX = INDEX_SCHEDULED;
         PageManager.open_ScheduledAct(this);
-        adapter.setSelectedIndex(INDEX_SCHEDULED);
     }
 
     public void setTitle(int strResId){
+        /*
+        //comment :
+            1. untuk set Title di Toolbar
+        */
         tvTitle.setText(strResId);
     }
 
@@ -164,6 +181,14 @@ public class RootNavBar extends RootAct
         content.addView(view);
     }
 
+    /*
+    //comment : rootnavbar - 3
+        1. function ini adalah function bawaan android
+        2. function ini mengatur back (physical button) dari aplikasi
+        3. fungsi ini dimodif menjadi:
+            -. ketika drawer terbuka lalu tekan back, maka close drawer
+            -. ketika drawer tertutup lalu tekan back, maka open drawer
+    */
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -181,11 +206,15 @@ public class RootNavBar extends RootAct
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
         return super.onOptionsItemSelected(item);
     }
 
+    /*
+    //comment : onItemClick - 3
+        1. setelah implements "AdapterView.OnItemClickListener", kita harus menambahkan function dibawah ini
+        2. Kita perlu mengecek position dari item yang diklik dan apa yang harus dilakukan
+        3. position dari drawer bergantung pada saat add-nya (comment: onItemClick - 4)
+    */
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         if(adapterView.equals(listViewDrawerMenu)){
@@ -203,6 +232,10 @@ public class RootNavBar extends RootAct
                 adapter.setSelectedIndex(i);
             }
 
+            /*
+            //comment : onItemClick - 6
+                -. setelah klik menu drawer, jangan lupa tutup drawernya
+            */
             DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
             drawer.closeDrawer(GravityCompat.START);
         }
@@ -214,6 +247,11 @@ public class RootNavBar extends RootAct
     }
 }
 
+/*
+//comment : drawermenuadapter - 1
+    1. DrawerMenuAdapter ini mengatur layout item yang ada di dalam listview
+    2. adapter bisa saja extends BaseAdapter atau CursorAdapter(isi listview dari database), atau adapter lainnya sesuai kebutuhan
+*/
 class DrawerMenuAdapter extends BaseAdapter {
 
     private Context mContext;
@@ -245,6 +283,11 @@ class DrawerMenuAdapter extends BaseAdapter {
         return drawerMenuItems.get(i)._id;
     }
 
+
+    /*
+    //comment : drawermenuadapter - 2
+        1. selalu pakai class ViewHolder untuk list semua component yang dipakai. Hal ini untuk mencegah rendering berlebihan yang dapat menyebabkan OutOfMemory
+    */
     class ViewHolder{
         LinearLayout lyt_item, lyt_item_selected;
         ImageView ivItem, ivItem_selected;
@@ -261,6 +304,10 @@ class DrawerMenuAdapter extends BaseAdapter {
         return selectedIndex;
     }
 
+    /*
+    //comment : drawermenuadapter - 3
+        1. function getView untuk mengatur tampilan dari item listview
+    */
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         ViewHolder viewHolder;

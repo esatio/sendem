@@ -16,6 +16,7 @@ import com.ez.sendem.ui.HistoryFragment;
 import com.ez.sendem.ui.InactiveFragment;
 import com.ez.sendem.ui.LoadingAct;
 import com.ez.sendem.ui.RootNavBar;
+import com.ez.sendem.ui.ScheduleDetailAct;
 import com.ez.sendem.ui.ScheduleNewAct;
 import com.ez.sendem.ui.ScheduledFragment;
 
@@ -23,12 +24,25 @@ import java.util.Locale;
 
 public class PageManager {
 
+    /*
+    comment :
+        1. set theme berguna untuk set tema yang sedang digunakan
+        2. tema disimpan di "SharedPreferences". "SharedPreferences" ini merupakan cache di android
+    */
     public static void setTheme(Activity act)
     {
+        /*
+        comment :
+            1. get theme dari shared preferences
+        */
         String theme = SharedPrefAccess.getFromXML(act, SharedPrefAccess.SHARED_PREF_USERDATA, SharedPrefAccess.KEY_THEME);
         if(theme.equalsIgnoreCase(""))
         {
             SharedPrefAccess.saveToXML(act, SharedPrefAccess.SHARED_PREF_USERDATA, SharedPrefAccess.KEY_THEME, AppConstraint.THEME_TYPE.THEME_MEDIUM);
+            /*
+            comment :
+                1. cara set theme di android
+            */
             act.setTheme(R.style.themeDefaultMedium);
         }
         else
@@ -42,6 +56,11 @@ public class PageManager {
         }
     }
 
+    /*
+    comment :
+        1. set language berguna untuk set language yang sedang digunakan
+        2. language disimpan di "SharedPreferences". "SharedPreferences" ini merupakan cache di android
+    */
     public static void setLanguage(Activity act){
         String lang = SharedPrefAccess.getFromXML(act, SharedPrefAccess.SHARED_PREF_USERDATA, SharedPrefAccess.KEY_LANG);
         if(lang.equalsIgnoreCase(""))
@@ -50,6 +69,10 @@ public class PageManager {
             lang = AppConstraint.LANG_TYPE.LANG_IN;
         }
 
+        /*
+        comment :
+            1. cara set language di android adalah dengan Locale.
+        */
         Locale locale = new Locale(lang);
         Locale.setDefault(locale);
         Configuration config = new Configuration();
@@ -58,6 +81,16 @@ public class PageManager {
     }
 
     public static void open_FirstPage(Context context){
+        /*
+        comment :
+            1. cara pindah activity di android adalah dengan:
+                    Intent intent = new Intent(context, (nama class));
+                    context.startActivity(intent);
+            2. setFlags berguna untuk clear semua flag default dan menambahkan flag di bagian paramnya
+            3. addFlags berguna untuk add flag
+            4. FLAG_ACTIVITY_CLEAR_TASK dan FLAG_ACTIVITY_NEW_TASK berguna untuk clear history sebelumnya.
+                (agar back tidak kembali ke halaman sebelumnya)
+        */
         Intent intent = new Intent(context, RootNavBar.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -100,6 +133,13 @@ public class PageManager {
 
     public static void open_ScheduleNew(Context context){
         Intent intent = new Intent(context, ScheduleNewAct.class);
+        context.startActivity(intent);
+    }
+
+    public static final String KEY_SCH_ID = "sch_id";
+    public static void open_ScheduleDetail(Context context, int sch_id){
+        Intent intent = new Intent(context, ScheduleDetailAct.class);
+        intent.putExtra(KEY_SCH_ID, sch_id);
         context.startActivity(intent);
     }
 

@@ -2,15 +2,18 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal" android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="8dp"
     android:gravity="center_vertical">
-    <ImageView
-        android:id="@+id/iv"
-        android:layout_width="32dp"
-        android:layout_height="32dp" />
+    <com.ez.sendem.ui.component.FontTextView
+        android:id="@+id/tvAppLogo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="?textAccent_3"/>
     <TextView
         android:id="@+id/tvAppName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
+        android:paddingLeft="8dp"
         style="?textPrimary_2"/>
 </LinearLayout>

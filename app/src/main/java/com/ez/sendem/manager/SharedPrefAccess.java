@@ -3,6 +3,11 @@ package com.ez.sendem.manager;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+/*
+note untuk class ini:
+-. class ini adalah class yang membantu programmer untuk menggunakan function SharedPreferences
+-. class ini juga mencatat list nama sharedpreference dan KEY apa saja yang digunakan (agar datanya tercentral)
+ */
 public class SharedPrefAccess {
     public static final String SHARED_PREF_USERDATA = "UserData";
 

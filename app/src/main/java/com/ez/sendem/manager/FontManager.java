@@ -10,6 +10,10 @@ import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.util.DisplayMetrics;
 
+/*
+note untuk class ini:
+-. class ini berguna untuk get gambar dari awesomefont
+ */
 public class FontManager extends Drawable {
 
     private static final float PADDING_RATIO = 0.88f;

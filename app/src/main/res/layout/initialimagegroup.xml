@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center">
+
+    <RelativeLayout
+        android:id="@+id/layout_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <com.ez.sendem.ui.component.InitialImage
+            android:id="@+id/initialimage_1_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true">
+        </com.ez.sendem.ui.component.InitialImage>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/layout_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <com.ez.sendem.ui.component.InitialImage
+            android:id="@+id/initialimage_2_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true">
+        </com.ez.sendem.ui.component.InitialImage>
+
+        <com.ez.sendem.ui.component.InitialImage
+            android:id="@+id/initialimage_2_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:layout_marginLeft="32dp" >
+        </com.ez.sendem.ui.component.InitialImage>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/layout_3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <com.ez.sendem.ui.component.InitialImage
+            android:id="@+id/initialimage_3_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+        </com.ez.sendem.ui.component.InitialImage>
+
+        <com.ez.sendem.ui.component.InitialImage
+            android:id="@+id/initialimage_3_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginLeft="16dp">
+        </com.ez.sendem.ui.component.InitialImage>
+
+        <com.ez.sendem.ui.component.InitialImage
+            android:id="@+id/initialimage_3_3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="36dp"
+            android:layout_marginLeft="36dp">
+        </com.ez.sendem.ui.component.InitialImage>
+
+    </RelativeLayout>
+
+</LinearLayout>
